@@ -1,0 +1,52 @@
+# ==============================================================================
+# .vercelignore - Exclude backend ML models & datasets from Vercel deployment
+# Keeps Vercel deployment package ultra-light (~4 MB, well below the 500 MB limit)
+# ==============================================================================
+
+# Large ML model binaries (hosted on Render backend)
+ALL_13_MODELS/
+ml_models_all/
+BINARY_ATTACK_DEFENSE/
+dl_models_v4/
+*.joblib
+*.pt
+*.onnx
+
+# Training data, CSVs, and model evaluation artifacts
+OUTPUTS/
+BASEFRAMES/
+v7_tactical/
+DEMOO/
+fyp/
+figures_atlas/
+training_csv/
+training_csv_v3/
+training_csv_v4/
+PANEL_REVIEW/
+figures_perclass_f1/
+model_comparison/
+FINALE_OUTPUTS/
+figures_workflow/
+deep_results_v4/
+vp7_3to8_all_models_videos/
+vp7_3to8_results/
+ml_results/
+ml_results_v4/
+results/
+dataset/
+*.csv
+
+# Heavy video & media files (transferred via cloud/Render)
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+
+# Local test suites and batch runners
+tests/
+START_WEBSITE.bat
+STOP_WEBSITE.bat
+reproduce*.py
+run_*.sh
+*.log
