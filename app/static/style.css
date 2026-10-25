@@ -403,7 +403,7 @@ html.lenis, html.lenis body {
   padding: 4.5rem 1.5rem 5.5rem;
   overflow: hidden;
   border-bottom: 1px solid var(--border-glass);
-  background: var(--bg-primary);
+  background: radial-gradient(circle at 50% 30%, rgba(2, 132, 199, 0.08) 0%, transparent 70%);
 }
 
 .vanta-canvas-bg {
@@ -413,7 +413,17 @@ html.lenis, html.lenis body {
   width: 100%;
   height: 100%;
   z-index: 1;
-  opacity: 0.75;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.hero-constellation-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
   pointer-events: none;
 }
 

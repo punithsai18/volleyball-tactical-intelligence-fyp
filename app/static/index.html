@@ -89,9 +89,10 @@
     </div>
   </header>
 
-  <!-- Hero Landing Section with Vanta.js 3D Mesh & GSAP Animation -->
+  <!-- Hero Landing Section with Vanta.js 3D Mesh & Dynamic Tactical Particle Animation -->
   <section class="hero-landing" id="heroLanding">
     <div id="vantaBackground" class="vanta-canvas-bg"></div>
+    <canvas id="heroConstellationCanvas" class="hero-constellation-bg"></canvas>
 
     <div class="hero-content">
       <div class="hero-pill-badge">
@@ -213,7 +214,10 @@
 
   <!-- Navigation Tabs -->
   <nav class="nav-tabs" role="tablist">
-    <button class="nav-tab active" data-tab="tab-radar" id="navRadarBtn">
+    <button class="nav-tab active" data-tab="tab-video" id="navVideoBtn">
+      <span>📹</span> Upload Video & Analyze
+    </button>
+    <button class="nav-tab" data-tab="tab-radar" id="navRadarBtn">
       <span>🎯</span> Tactical Radar
     </button>
     <button class="nav-tab" data-tab="tab-consensus" id="navConsensusBtn">
@@ -227,9 +231,6 @@
     </button>
     <button class="nav-tab" data-tab="tab-leaderboard" id="navLeaderboardBtn">
       <span>📊</span> Model Zoo & LOVO Leaderboard
-    </button>
-    <button class="nav-tab" data-tab="tab-video" id="navVideoBtn">
-      <span>📹</span> Upload Video & Analyze
     </button>
     <button class="nav-tab" data-tab="tab-upload" id="navUploadBtn">
       <span>📁</span> Upload Rally CSV
@@ -272,7 +273,7 @@
   <main class="main-container">
 
     <!-- TAB 1: TACTICAL RADAR (LIVE INFERENCE & COURT) -->
-    <section id="tab-radar" class="tab-pane active">
+    <section id="tab-radar" class="tab-pane">
       <!-- Quick Sample Clips Selector -->
       <div class="sample-bar" id="sampleBar">
         <span class="sample-bar-label">Rally Clips:</span>
@@ -740,7 +741,7 @@
     </section>
 
     <!-- TAB: UPLOAD VIDEO & ANALYZE -->
-    <section id="tab-video" class="tab-pane">
+    <section id="tab-video" class="tab-pane active">
       <div class="glass-card">
         <div class="card-header">
           <div>

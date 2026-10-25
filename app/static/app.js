@@ -132,6 +132,7 @@ const TACTIC_COLORS = {
 document.addEventListener("DOMContentLoaded", () => {
   initLenis();
   initVanta();
+  initHeroConstellation();
   initGSAPAnimations();
   setupLandingHeroInteractions();
 
@@ -2185,6 +2186,113 @@ function updateVantaTheme(theme) {
       backgroundColor: isDark ? 0x090d16 : 0xf8fafc
     });
   }
+}
+
+// ---------------------------------------------------------------------------
+// DYNAMIC HERO TACTICAL CONSTELLATION & MESH ANIMATION
+// ---------------------------------------------------------------------------
+function initHeroConstellation() {
+  const canvas = document.getElementById("heroConstellationCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const hero = document.getElementById("heroLanding");
+
+  function resize() {
+    canvas.width = hero ? hero.clientWidth : window.innerWidth;
+    canvas.height = hero ? hero.clientHeight : window.innerHeight * 0.85;
+  }
+  resize();
+  window.addEventListener("resize", resize);
+
+  const numNodes = Math.min(80, Math.floor((canvas.width * canvas.height) / 11000));
+  const nodes = [];
+  for (let i = 0; i < numNodes; i++) {
+    nodes.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.65,
+      vy: (Math.random() - 0.5) * 0.65,
+      radius: Math.random() * 2.2 + 1.2,
+      baseRadius: Math.random() * 2.2 + 1.2,
+      pulse: Math.random() * Math.PI * 2,
+      isSpecial: i % 7 === 0
+    });
+  }
+
+  let mouse = { x: -9999, y: -9999, radius: 160 };
+  if (hero) {
+    hero.addEventListener("mousemove", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    });
+    hero.addEventListener("mouseleave", () => {
+      mouse.x = -9999;
+      mouse.y = -9999;
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+
+    const nodeColor = isDark ? "rgba(56, 189, 248, " : "rgba(2, 132, 199, ";
+    const specialColor = "rgba(245, 158, 11, ";
+    const lineColor = isDark ? "56, 189, 248" : "2, 132, 199";
+
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      n.x += n.vx;
+      n.y += n.vy;
+      n.pulse += 0.035;
+
+      if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
+      if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
+
+      // Magnetic mouse interaction
+      const dx = mouse.x - n.x;
+      const dy = mouse.y - n.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < mouse.radius) {
+        const force = (1 - dist / mouse.radius) * 2.2;
+        n.x -= (dx / dist) * force;
+        n.y -= (dy / dist) * force;
+      }
+
+      // Draw tactical mesh connections
+      for (let j = i + 1; j < nodes.length; j++) {
+        const n2 = nodes[j];
+        const distNodes = Math.hypot(n.x - n2.x, n.y - n2.y);
+        if (distNodes < 120) {
+          const alpha = (1 - distNodes / 120) * (isDark ? 0.38 : 0.25);
+          ctx.beginPath();
+          ctx.moveTo(n.x, n.y);
+          ctx.lineTo(n2.x, n2.y);
+          ctx.strokeStyle = `rgba(${lineColor}, ${alpha})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+
+      // Draw tactical node
+      const pulseSize = n.baseRadius + Math.sin(n.pulse) * 0.8;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, pulseSize, 0, Math.PI * 2);
+      ctx.fillStyle = n.isSpecial ? `${specialColor}0.95)` : `${nodeColor}0.9)`;
+      ctx.fill();
+
+      // Glowing aura
+      if (n.isSpecial) {
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, pulseSize * 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = `${specialColor}0.2)`;
+        ctx.fill();
+      }
+    }
+
+    requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
 }
 
 function initGSAPAnimations() {
