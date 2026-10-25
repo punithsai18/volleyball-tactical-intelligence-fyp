@@ -2464,6 +2464,39 @@ function setupLandingHeroInteractions() {
     });
   }
 
+  const heroDocsBtn = document.getElementById("heroDocsBtn");
+  if (heroDocsBtn) {
+    heroDocsBtn.addEventListener("click", () => {
+      playClickSound();
+      smoothScrollTo("#workspaceSection");
+      const docsTab = document.getElementById("navDocsBtn");
+      if (docsTab) docsTab.click();
+    });
+  }
+
+  const navDocsHeaderBtn = document.getElementById("navDocsHeaderBtn");
+  if (navDocsHeaderBtn) {
+    navDocsHeaderBtn.addEventListener("click", () => {
+      playClickSound();
+      smoothScrollTo("#workspaceSection");
+      const docsTab = document.getElementById("navDocsBtn");
+      if (docsTab) docsTab.click();
+    });
+  }
+
+  // Quick Jump Sub-Navigation Pills inside Docs Portal
+  document.querySelectorAll(".doc-pill").forEach(pill => {
+    pill.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = pill.getAttribute("href");
+      const targetEl = document.querySelector(targetId);
+      if (targetEl) {
+        playClickSound();
+        smoothScrollTo(targetId, -80);
+      }
+    });
+  });
+
   // Header Back to Overview Links
   const brandHome = document.getElementById("brandHomeLink");
   if (brandHome) {
@@ -2659,7 +2692,8 @@ function setupProductShowcaseModal() {
       if (exportReportBtn) {
         exportReportBtn.click();
       } else {
-      window.location.href = apiUrl("/api/download-suite");
+        window.location.href = apiUrl("/api/download-suite");
+      }
     });
   }
 

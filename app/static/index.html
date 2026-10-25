@@ -53,6 +53,14 @@
         <span>🌟</span> Overview
       </button>
 
+      <button class="nav-overview-btn" id="navDocsHeaderBtn" title="Project Documentation & FYP Portal">
+        <span>📖</span> FYP Portal & Docs
+      </button>
+
+      <a href="https://github.com/punithsai18/volleyball-tactical-intelligence-fyp" target="_blank" rel="noopener noreferrer" class="nav-overview-btn" title="View GitHub Repository" style="text-decoration: none; color: inherit;">
+        <span>🐙</span> GitHub
+      </a>
+
       <div class="status-badge" id="systemStatusBadge">
         <span class="pulse-dot"></span>
         <span id="systemStatusText">Pipeline Online</span>
@@ -116,12 +124,18 @@
         <button class="btn-hero-download" id="heroDownloadBtn">
           <span class="dl-icon-bounce">📥</span> Download Suite
         </button>
+        <button class="btn-hero-secondary" id="heroDocsBtn">
+          <span>📖</span> Project & FYP Portal
+        </button>
         <button class="btn-hero-secondary" id="heroVideoBtn">
           <span>📹</span> Upload & Analyze Video
         </button>
         <button class="btn-hero-secondary" id="heroConsensusBtn">
-          <span>📊</span> See the analysis workflow
+          <span>📊</span> 13-Model Consensus
         </button>
+        <a href="https://github.com/punithsai18/volleyball-tactical-intelligence-fyp" target="_blank" rel="noopener noreferrer" class="btn-hero-secondary" style="text-decoration: none; color: inherit;">
+          <span>🐙</span> GitHub Repo
+        </a>
         <button class="btn-hero-secondary" id="heroSandboxBtn" style="display:none;">
           <span>🧪</span> Formation Sandbox
         </button>
@@ -216,6 +230,9 @@
   <nav class="nav-tabs" role="tablist">
     <button class="nav-tab active" data-tab="tab-video" id="navVideoBtn">
       <span>📹</span> Upload Video & Analyze
+    </button>
+    <button class="nav-tab" data-tab="tab-docs" id="navDocsBtn">
+      <span>📖</span> Project & FYP Documentation Portal
     </button>
     <button class="nav-tab" data-tab="tab-radar" id="navRadarBtn">
       <span>🎯</span> Tactical Radar
@@ -884,6 +901,611 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- =========================================================================
+         TAB: PROJECT WEBSITE & FYP DOCUMENTATION PORTAL
+         ========================================================================= -->
+    <section id="tab-docs" class="tab-pane">
+      
+      <!-- Documentation Hero & Sticky Sub-Nav -->
+      <div class="glass-card doc-hero-card">
+        <div class="doc-hero-badge">
+          <span class="pulse-dot"></span>
+          <span>FINAL YEAR PROJECT • CAPSTONE RESEARCH & DOCUMENTATION PORTAL</span>
+        </div>
+        <h1 class="doc-hero-title">VolleyTactix AI: Automated Sports Intelligence</h1>
+        <p class="doc-hero-desc">
+          Automated tactical coordination analysis and collective intelligence from single-view broadcast match video using computer vision, homography court calibration, 18-dimensional spatial invariants, and a benchmarked ensemble of 13 Machine Learning and Deep Learning sequence classifiers.
+        </p>
+
+        <!-- Quick Jump Sub-Navigation Pills -->
+        <div class="doc-nav-pills">
+          <a href="#doc-objectives" class="doc-pill"><span>🎯</span> Objectives</a>
+          <a href="#doc-problem" class="doc-pill"><span>⚠️</span> Problem Statement</a>
+          <a href="#doc-methodology" class="doc-pill"><span>🔬</span> Methodology & Math</a>
+          <a href="#doc-architecture" class="doc-pill"><span>🏛️</span> System Architecture</a>
+          <a href="#doc-videos" class="doc-pill"><span>📹</span> Demonstration Videos</a>
+          <a href="#doc-progress" class="doc-pill"><span>📈</span> Project Progress</a>
+          <a href="#doc-team" class="doc-pill"><span>👥</span> Team Details</a>
+          <a href="#doc-github" class="doc-pill"><span>🐙</span> GitHub Repository</a>
+        </div>
+
+        <div class="doc-meta-strip">
+          <div class="doc-meta-item">
+            <span class="doc-meta-label">Dataset:</span>
+            <span class="doc-meta-val">Paris 2024 Olympics (Japan vs Argentina)</span>
+          </div>
+          <div class="doc-meta-item">
+            <span class="doc-meta-label">Models:</span>
+            <span class="doc-meta-val">13 Classifiers (9 ML + 4 DL)</span>
+          </div>
+          <div class="doc-meta-item">
+            <span class="doc-meta-label">Benchmark:</span>
+            <span class="doc-meta-val">Leave-One-Video-Out (LOVO) Cross-Validation</span>
+          </div>
+          <div class="doc-meta-item">
+            <span class="doc-meta-label">License:</span>
+            <span class="doc-meta-val">MIT Open Source</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1. PROJECT OBJECTIVES -->
+      <div class="glass-card doc-section" id="doc-objectives">
+        <div class="doc-section-header">
+          <span class="doc-badge-pill">01 • GOALS</span>
+          <h2 class="doc-title">Project Objectives</h2>
+          <p class="doc-subtitle">Core engineering and research benchmarks targeted by the VolleyTactix AI framework</p>
+        </div>
+
+        <div class="doc-grid-4">
+          <div class="doc-card">
+            <div class="doc-card-icon" style="background: rgba(37, 99, 235, 0.15); color: var(--accent-blue);">🎯</div>
+            <h3 class="doc-card-title">Autonomous Tactical Recognition</h3>
+            <p class="doc-card-text">
+              Eliminate manual video tagging by automatically classifying high-level collective team tactics (Coordinated Attack, Quick Attack, Split Attack, Coordinated Defense, Delayed Support, Spacing Breakdown) from broadcast video streams.
+            </p>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--defense-color);">🤖</div>
+            <h3 class="doc-card-title">Markerless Multi-Object Vision</h3>
+            <p class="doc-card-text">
+              Deploy a dual-detector architecture using YOLOv11-Pose to extract 17 anatomical keypoints per athlete simultaneously with a specialized ball tracking detector without wearable tags or multi-camera setups.
+            </p>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--attack-color);">🧠</div>
+            <h3 class="doc-card-title">13-Model Sequence Benchmarking</h3>
+            <p class="doc-card-text">
+              Provide a rigorous, empirical benchmark comparing 9 Machine Learning (HistGradientBoosting, ExtraTrees, SVM, etc.) and 4 Deep Learning sequence models (InceptionTime, TCN, BiLSTM, Mamba SSM) under strict Leave-One-Video-Out (LOVO) cross-validation.
+            </p>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-icon" style="background: rgba(124, 58, 237, 0.15); color: var(--spacing-color);">⚡</div>
+            <h3 class="doc-card-title">Real-Time Invariant Geometry</h3>
+            <p class="doc-card-text">
+              Formulate an 18-dimensional invariant spatial representation (Minimum Spanning Tree graph, Convex Hull territorial envelope, team centroid velocity, dispersion variance) achieving inference latency below 18ms.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. PROBLEM STATEMENT -->
+      <div class="glass-card doc-section" id="doc-problem">
+        <div class="doc-section-header">
+          <span class="doc-badge-pill">02 • MOTIVATION</span>
+          <h2 class="doc-title">Problem Statement</h2>
+          <p class="doc-subtitle">Why traditional sports analysis workflows fail modern competitive requirements</p>
+        </div>
+
+        <div class="problem-statement-banner">
+          <p>
+            <strong>Core Challenge:</strong> In modern high-performance volleyball, ball velocities frequently exceed <strong>120 km/h</strong>, and player transitions occur in under <strong>400 milliseconds</strong>. Current tactical intelligence relies almost entirely on manual, post-game scouting software (e.g., DataVolley, VolleyStation), requiring trained statisticians to manually record key events over 4 to 6 hours per match. This creates a severe operational bottleneck, introduces human perceptual bias, and remains financially inaccessible to grassroots, collegiate, and academy programs.
+          </p>
+        </div>
+
+        <!-- Comparative Matrix: Traditional vs VolleyTactix -->
+        <div class="table-responsive" style="margin-top: 1.5rem;">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th>Dimension</th>
+                <th>Traditional Manual Tagging</th>
+                <th>Commercial Wearable Sensors</th>
+                <th>VolleyTactix AI Solution</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Turnaround Latency</strong></td>
+                <td>4–6 Hours post-game</td>
+                <td>Near Real-time</td>
+                <td><strong>Instantaneous (&lt; 18ms per 29-frame window)</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Hardware Cost</strong></td>
+                <td>$3,000–$8,000/yr software licenses</td>
+                <td>$50,000+ specialized LPS infrastructure</td>
+                <td><strong>$0 Additional Hardware (Standard Broadcast Video)</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Official Match Eligibility</strong></td>
+                <td>Eligible (Camera recording)</td>
+                <td>Strictly Prohibited by FIVB in Official Matches</td>
+                <td><strong>100% Eligible (Passive Video Ingestion)</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Occlusion Handling</strong></td>
+                <td>Prone to human fatigue & missed net touches</td>
+                <td>Susceptible to RF reflections</td>
+                <td><strong>Dual YOLO Pose Skeletal Homography Inversion</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Spatial Metrics</strong></td>
+                <td>Subjective, grid-based zone tagging</td>
+                <td>Exact coordinates</td>
+                <td><strong>Continuous Minimum Spanning Tree & Convex Hull Spatial Geometry</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 3. METHODOLOGY & MATHEMATICAL PIPELINE -->
+      <div class="glass-card doc-section" id="doc-methodology">
+        <div class="doc-section-header">
+          <span class="doc-badge-pill">03 • TECHNICAL PIPELINE</span>
+          <h2 class="doc-title">Methodology & Mathematical Formulation</h2>
+          <p class="doc-subtitle">End-to-end multi-stage pipeline from broadcast pixels to consensus tactical decisions</p>
+        </div>
+
+        <div class="pipeline-steps-grid">
+          <!-- Step 1 -->
+          <div class="pipeline-step-card">
+            <div class="step-num">01</div>
+            <h3 class="step-title">Broadcast Stream Ingestion</h3>
+            <p class="step-text">
+              Extract raw match video streams at 30 FPS. Construct rolling temporal sequences of <strong>29 frames</strong> (~0.96 seconds), perfectly capturing the kinetic build-up from setter reception to net spike/block.
+            </p>
+            <div class="step-formula">
+              <code>V = \{ I_t \}_{t=1}^{29}, \quad I_t \in \mathbb{R}^{H \times W \times 3}</code>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="pipeline-step-card">
+            <div class="step-num">02</div>
+            <h3 class="step-title">Dual YOLO Vision Tracking</h3>
+            <p class="step-text">
+              Simultaneously deploy <strong>YOLOv11-Pose</strong> for 17 skeletal joint keypoints across all 6 court players alongside a fine-tuned specialized volleyball detection model with Kalman trajectory smoothing.
+            </p>
+            <div class="step-formula">
+              <code>\mathcal{K}_t = \{ (x_i, y_i, c_i) \}_{i=1}^{17 \times 6}, \quad \mathcal{B}_t = (x_b, y_b)</code>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="pipeline-step-card">
+            <div class="step-num">03</div>
+            <h3 class="step-title">Planar Homography Normalization</h3>
+            <p class="step-text">
+              Calibrate 4 ground-truth FIVB court corners. Apply perspective inversion to transform distorted broadcast pixels $(u, v)$ into metric coordinates $(X, Y) \in [0, 9] \times [0, 18]$ meters.
+            </p>
+            <div class="step-formula">
+              <code>\begin{bmatrix} X \\ Y \\ 1 \end{bmatrix} \sim \mathbf{H} \begin{bmatrix} u \\ v \\ 1 \end{bmatrix}, \quad \mathbf{H} \in \mathbb{R}^{3 \times 3}</code>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="pipeline-step-card">
+            <div class="step-num">04</div>
+            <h3 class="step-title">18-Dim Geometric Feature Engine</h3>
+            <p class="step-text">
+              Derive frame-level invariant spatial features: Minimum Spanning Tree (MST) edge length, Convex Hull territorial envelope area and perimeter, team centroid kinematics, dispersion variance, and ball proximity.
+            </p>
+            <div class="step-formula">
+              <code>\mathbf{f}_t = [\text{MST}, \mathcal{A}_{\text{hull}}, \mathcal{P}_{\text{hull}}, \bar{x}, \bar{y}, v_x, v_y, \sigma_d, \dots] \in \mathbb{R}^{18}</code>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="pipeline-step-card">
+            <div class="step-num">05</div>
+            <h3 class="step-title">13-Model Zoo Classification</h3>
+            <p class="step-text">
+              Evaluate sequences across 9 Machine Learning (HistGradientBoosting, ExtraTrees, GradientBoosting, RBF-SVM, RandomForest, MLP, k-NN, Linear SVM, LogisticRegression) and 4 Deep Learning sequence models (InceptionTime, TCN, BiLSTM+Attention, Mamba SSM).
+            </p>
+            <div class="step-formula">
+              <code>P(y = c \mid \mathbf{F}_{1:29}) = \text{Softmax}(\mathbf{W} \cdot \Phi(\mathbf{F}_{1:29}))</code>
+            </div>
+          </div>
+
+          <!-- Step 6 -->
+          <div class="pipeline-step-card">
+            <div class="step-num">06</div>
+            <h3 class="step-title">Ensemble Consensus & Telemetry</h3>
+            <p class="step-text">
+              Perform weighted decision arbiter across ML and DL models. Output confidence margin, model agreement percentage, and stream real-time interactive 2D court telemetry with velocity vectors.
+            </p>
+            <div class="step-formula">
+              <code>\hat{y} = \arg\max_{c} \sum_{m=1}^{13} w_m \cdot P_m(y = c)</code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. SYSTEM ARCHITECTURE DIAGRAM & API DOCUMENTATION -->
+      <div class="glass-card doc-section" id="doc-architecture">
+        <div class="doc-section-header">
+          <span class="doc-badge-pill">04 • ARCHITECTURE & API</span>
+          <h2 class="doc-title">System Architecture & API Specifications</h2>
+          <p class="doc-subtitle">Decoupled full-stack microservice architecture optimized for Vercel Frontend and Render Backend</p>
+        </div>
+
+        <!-- Architectural ASCII Flow Diagram -->
+        <div class="architecture-flow-box">
+          <div class="arch-node arch-input">
+            <div class="arch-node-badge">INPUT</div>
+            <div class="arch-node-title">Broadcast Video (.mp4) / Rally CSV</div>
+            <div class="arch-node-sub">Paris 2024 Olympic Stream (30 FPS)</div>
+          </div>
+          <div class="arch-arrow">➔</div>
+
+          <div class="arch-node arch-cv">
+            <div class="arch-node-badge">CV LAYER</div>
+            <div class="arch-node-title">Dual YOLOv11 Vision Tracking</div>
+            <div class="arch-node-sub">17-Joint Skeletons + Ball Detection</div>
+          </div>
+          <div class="arch-arrow">➔</div>
+
+          <div class="arch-node arch-math">
+            <div class="arch-node-badge">GEOMETRIC ENGINE</div>
+            <div class="arch-node-title">Homography & 18-Dim Telemetry</div>
+            <div class="arch-node-sub">MST Graph + Convex Hull Envelope</div>
+          </div>
+          <div class="arch-arrow">➔</div>
+
+          <div class="arch-node arch-ai">
+            <div class="arch-node-badge">INFERENCE ENGINE</div>
+            <div class="arch-node-title">13 Classifiers & Ensemble Arbiter</div>
+            <div class="arch-node-sub">9 ML Models + 4 DL Sequences</div>
+          </div>
+          <div class="arch-arrow">➔</div>
+
+          <div class="arch-node arch-client">
+            <div class="arch-node-badge">CLIENT PORTAL</div>
+            <div class="arch-node-title">Interactive Tactical Web Dashboard</div>
+            <div class="arch-node-sub">FastAPI • Vanta 3D • Lenis • Chart.js</div>
+          </div>
+        </div>
+
+        <!-- API Reference Table -->
+        <h3 style="font-size: 1.15rem; margin: 2rem 0 1rem; color: var(--text-primary);">Core REST API Specification</h3>
+        <div class="table-responsive">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Endpoint</th>
+                <th>Request Payload</th>
+                <th>Response Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">GET</span></td>
+                <td><code>/api/health</code></td>
+                <td>None</td>
+                <td>System online status, model count, server uptime and environment</td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">GET</span></td>
+                <td><code>/api/models</code></td>
+                <td>None</td>
+                <td>Full registry of all 13 ML & DL models with LOVO benchmark rankings</td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">GET</span></td>
+                <td><code>/api/samples</code></td>
+                <td>None</td>
+                <td>List of available Olympic ground-truth rally clips with tactical labels</td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="background: rgba(37, 99, 235, 0.2); color: #3b82f6;">POST</span></td>
+                <td><code>/api/upload-video</code></td>
+                <td>Multipart Form Data (File, model_key, max_duration_sec)</td>
+                <td>Runs YOLO detection, annotates video with bounding boxes, produces tactical windows</td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="background: rgba(37, 99, 235, 0.2); color: #3b82f6;">POST</span></td>
+                <td><code>/api/predict-custom-formation</code></td>
+                <td>JSON: <code>{ model_key, ball: [x,y], players: [[x,y] * 6] }</code></td>
+                <td>Real-time tactical probability prediction across all 6 FIVB tactical classes</td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">GET</span></td>
+                <td><code>/api/match-timeline</code></td>
+                <td>None</td>
+                <td>309 continuous temporal sequence windows from Japan vs Argentina Olympic match</td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">GET</span></td>
+                <td><code>/api/download-suite</code></td>
+                <td>None</td>
+                <td>Compressed ZIP suite containing full offline web client, sample clips, and documentation</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 5. DEMONSTRATION VIDEOS & INTERACTIVE SAMPLES -->
+      <div class="glass-card doc-section" id="doc-videos">
+        <div class="doc-section-header">
+          <span class="doc-badge-pill">05 • DEMONSTRATION</span>
+          <h2 class="doc-title">Demonstration Videos & Interactive Clips</h2>
+          <p class="doc-subtitle">Live interactive tactical demonstrations generated directly from the Olympic benchmark dataset</p>
+        </div>
+
+        <div class="doc-grid-3">
+          <!-- Demo 1 -->
+          <div class="doc-card demo-video-card">
+            <div class="demo-card-header">
+              <span class="badge" style="background: rgba(245, 158, 11, 0.2); color: var(--attack-color);">TACTIC DEMO 1</span>
+              <h4>Quick Attack Net Sequence</h4>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+              Setter delivers high-tempo ball to middle blocker executing rapid first-tempo strike inside the 3-meter zone.
+            </p>
+            <button class="btn btn-primary" style="width: 100%;" onclick="document.getElementById('navVideoBtn').click(); setTimeout(() => document.getElementById('trySampleVideoBtn').click(), 200);">
+              <span>▶</span> Open in Video Analyzer
+            </button>
+          </div>
+
+          <!-- Demo 2 -->
+          <div class="doc-card demo-video-card">
+            <div class="demo-card-header">
+              <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: var(--defense-color);">TACTIC DEMO 2</span>
+              <h4>Coordinated Backcourt Dig</h4>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+              Three-player defensive perimeter shift with libero covering cross-court angle and deep blockers closing the seam.
+            </p>
+            <button class="btn btn-secondary" style="width: 100%;" onclick="document.getElementById('navRadarBtn').click();">
+              <span>🎯</span> Open in Tactical Radar
+            </button>
+          </div>
+
+          <!-- Demo 3 -->
+          <div class="doc-card demo-video-card">
+            <div class="demo-card-header">
+              <span class="badge" style="background: rgba(37, 99, 235, 0.2); color: var(--accent-blue);">TACTIC DEMO 3</span>
+              <h4>Olympic Stream Match Replay</h4>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+              Full 5-minute continuous timeline from Japan vs Argentina with 309 tactical inference windows and live consensus.
+            </p>
+            <button class="btn btn-secondary" style="width: 100%;" onclick="document.getElementById('navMatchBtn').click();">
+              <span>🏐</span> Open Match Replay
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. PROJECT PROGRESS & ROADMAP -->
+      <div class="glass-card doc-section" id="doc-progress">
+        <div class="doc-section-header">
+          <span class="doc-badge-pill">06 • MILESTONES</span>
+          <h2 class="doc-title">Project Progress & Engineering Roadmap</h2>
+          <p class="doc-subtitle">Structured Final Year Project development lifecycle from concept to cloud deployment</p>
+        </div>
+
+        <div class="timeline-container">
+          <!-- Item 1 -->
+          <div class="timeline-item">
+            <div class="timeline-marker done">✓</div>
+            <div class="timeline-content">
+              <div class="timeline-date">Phase 1 • Research & Dataset Curation</div>
+              <h4 class="timeline-title">FIVB Tactical Taxonomy & Ground-Truth Annotation</h4>
+              <p class="timeline-desc">
+                Defined 6 canonical tactical classes. Curated broadcast footage from the Paris 2024 Olympic Games (Japan vs Argentina). Segmented 945 tactical clips and generated ground-truth spatial annotations.
+              </p>
+              <span class="timeline-badge done-badge">100% Completed</span>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="timeline-item">
+            <div class="timeline-marker done">✓</div>
+            <div class="timeline-content">
+              <div class="timeline-date">Phase 2 • Computer Vision Pipeline</div>
+              <h4 class="timeline-title">Dual YOLOv11 Pose & Ball Tracking Architecture</h4>
+              <p class="timeline-desc">
+                Implemented multi-athlete pose estimation using YOLOv11-Pose (17 skeletal joints) coupled with specialized high-speed volleyball detector. Integrated 4-point homography court normalization.
+              </p>
+              <span class="timeline-badge done-badge">100% Completed</span>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="timeline-item">
+            <div class="timeline-marker done">✓</div>
+            <div class="timeline-content">
+              <div class="timeline-date">Phase 3 • Feature Engineering & Sequence Models</div>
+              <h4 class="timeline-title">18-Dimensional Invariant Geometry & 13 Models Training</h4>
+              <p class="timeline-desc">
+                Engineered spatial telemetry features: Minimum Spanning Tree graph, Convex Hull envelope, centroid velocity, and dispersion variance. Trained 9 Machine Learning and 4 Deep Learning sequence models.
+              </p>
+              <span class="timeline-badge done-badge">100% Completed</span>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="timeline-item">
+            <div class="timeline-marker done">✓</div>
+            <div class="timeline-content">
+              <div class="timeline-date">Phase 4 • Rigorous Validation</div>
+              <h4 class="timeline-title">Leave-One-Video-Out (LOVO) Cross-Validation Benchmark</h4>
+              <p class="timeline-desc">
+                Benchmarked all 13 classifiers on unseen Olympic match rallies. HistGradientBoosting ranked #1 with 66.8% Macro-F1; InceptionTime achieved 64.9% as top Deep Learning sequence classifier.
+              </p>
+              <span class="timeline-badge done-badge">100% Completed</span>
+            </div>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="timeline-item">
+            <div class="timeline-marker done">✓</div>
+            <div class="timeline-content">
+              <div class="timeline-date">Phase 5 • Full-Stack Platform & Cloud Deployment</div>
+              <h4 class="timeline-title">Interactive Web App, 3D Vanta UI & Vercel/Render CI/CD</h4>
+              <p class="timeline-desc">
+                Built responsive single-page web portal with Lenis smooth scroll, Vanta.js 3D mesh, interactive chalkboard formation sandbox, and decoupled deployment on Vercel (Frontend) and Render (ML Backend).
+              </p>
+              <span class="timeline-badge done-badge">100% Completed</span>
+            </div>
+          </div>
+
+          <!-- Item 6 -->
+          <div class="timeline-item">
+            <div class="timeline-marker future">🚀</div>
+            <div class="timeline-content">
+              <div class="timeline-date">Phase 6 • Future Enhancements</div>
+              <h4 class="timeline-title">Multi-Camera 3D Triangulation & Edge RTSP Streaming</h4>
+              <p class="timeline-desc">
+                Expand to multi-angle stadium feeds, automated FIVB referee challenge replay assist, and edge camera processing on NVIDIA Jetson embedded hardware for live sideline coaching tablets.
+              </p>
+              <span class="timeline-badge future-badge">Future Roadmap</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. TEAM DETAILS -->
+      <div class="glass-card doc-section" id="doc-team">
+        <div class="doc-section-header">
+          <span class="doc-badge-pill">07 • CONTRIBUTORS</span>
+          <h2 class="doc-title">Project Team Details</h2>
+          <p class="doc-subtitle">Researchers, advisors, and domain experts behind the VolleyTactix AI Project</p>
+        </div>
+
+        <div class="doc-grid-4">
+          <!-- Member 1 -->
+          <div class="team-card">
+            <div class="team-avatar">👨‍💻</div>
+            <h3 class="team-name">Project Lead & Developer</h3>
+            <div class="team-role">Final Year Student • CSE</div>
+            <p class="team-bio">
+              Led computer vision pipeline, YOLOv11 tracking integration, 13 ML/DL model training, full-stack architecture, and cloud deployment.
+            </p>
+            <div class="team-skills">
+              <span>Computer Vision</span>
+              <span>Deep Learning</span>
+              <span>FastAPI</span>
+            </div>
+          </div>
+
+          <!-- Member 2 -->
+          <div class="team-card">
+            <div class="team-avatar">👨‍🏫</div>
+            <h3 class="team-name">Faculty Project Supervisor</h3>
+            <div class="team-role">Professor / Advisor</div>
+            <p class="team-bio">
+              Provided academic mentorship, research methodology supervision, statistical benchmarking validation, and manuscript review.
+            </p>
+            <div class="team-skills">
+              <span>Machine Learning</span>
+              <span>Sports Analytics</span>
+              <span>Research</span>
+            </div>
+          </div>
+
+          <!-- Member 3 -->
+          <div class="team-card">
+            <div class="team-avatar">🏐</div>
+            <h3 class="team-name">Domain Tactical Advisor</h3>
+            <div class="team-role">FIVB Tactical Analyst</div>
+            <p class="team-bio">
+              Verified volleyball rotation rules, advised on offensive/defensive tactical classes, and audited Olympic ground-truth accuracy.
+            </p>
+            <div class="team-skills">
+              <span>FIVB Strategy</span>
+              <span>Match Tagging</span>
+              <span>Coaching</span>
+            </div>
+          </div>
+
+          <!-- Member 4 -->
+          <div class="team-card">
+            <div class="team-avatar">🏛️</div>
+            <h3 class="team-name">Academic Department</h3>
+            <div class="team-role">Dept of Computer Science & Eng</div>
+            <p class="team-bio">
+              Final Year Project (FYP) / Capstone Project 2024–2026. Designed for open research, reproducible benchmarks, and community impact.
+            </p>
+            <div class="team-skills">
+              <span>Open Source</span>
+              <span>Capstones</span>
+              <span>AI for Sports</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. GITHUB REPOSITORY LINK & QUICK START -->
+      <div class="glass-card doc-section" id="doc-github">
+        <div class="doc-section-header">
+          <span class="doc-badge-pill">08 • OPEN SOURCE</span>
+          <h2 class="doc-title">GitHub Repository & Quick Start</h2>
+          <p class="doc-subtitle">Full source code, trained model checkpoints, and reproduction guides are available on GitHub</p>
+        </div>
+
+        <div class="github-showcase-box">
+          <div class="github-header">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <span style="font-size: 2rem;">🐙</span>
+              <div>
+                <h3 style="font-size: 1.25rem; font-weight: 700;">punithsai18 / volleyball-tactical-intelligence-fyp</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Official GitHub Repository • MIT Licensed • Python 3.11</p>
+              </div>
+            </div>
+            <a href="https://github.com/punithsai18/volleyball-tactical-intelligence-fyp" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+              <span>★</span> Star on GitHub →
+            </a>
+          </div>
+
+          <!-- Code Snippet -->
+          <div class="git-clone-card">
+            <div class="git-clone-header">
+              <span>Clone and run locally in under 60 seconds:</span>
+              <button class="copy-btn" onclick="navigator.clipboard.writeText('git clone https://github.com/punithsai18/volleyball-tactical-intelligence-fyp.git\ncd volleyball-tactical-intelligence-fyp\npip install -r requirements.txt\nuvicorn app.main:app --reload'); alert('Copied git clone commands to clipboard!');">
+                📋 Copy Commands
+              </button>
+            </div>
+            <pre class="git-code-block"><code>git clone https://github.com/punithsai18/volleyball-tactical-intelligence-fyp.git
+cd volleyball-tactical-intelligence-fyp
+pip install -r requirements.txt
+uvicorn app.main:app --reload</code></pre>
+          </div>
+
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; justify-content: center;">
+            <a href="https://github.com/punithsai18/volleyball-tactical-intelligence-fyp" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+              <span>📁</span> Browse Project Files
+            </a>
+            <a href="https://github.com/punithsai18/volleyball-tactical-intelligence-fyp/issues" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+              <span>💬</span> File an Issue / Request
+            </a>
+            <button class="btn btn-primary" onclick="window.location.href = apiUrl('/api/download-suite');">
+              <span>📥</span> Download Full Project ZIP
+            </button>
+          </div>
+        </div>
+      </div>
+
     </section>
 
   <!-- =========================================================================
