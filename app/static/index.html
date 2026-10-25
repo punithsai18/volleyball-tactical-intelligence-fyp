@@ -89,19 +89,20 @@
     </div>
   </header>
 
-  <!-- Hero Landing Section with Vanta.js 3D Mesh & Dynamic Tactical Particle Animation -->
+  <!-- Hero Landing Section with Aurora Mesh, Vanta 3D & Dynamic Tactical Particles -->
   <section class="hero-landing" id="heroLanding">
+    <div class="aurora-bg-mesh"></div>
     <div id="vantaBackground" class="vanta-canvas-bg"></div>
     <canvas id="heroConstellationCanvas" class="hero-constellation-bg"></canvas>
 
     <div class="hero-content">
-      <div class="hero-pill-badge">
+      <div class="hero-pill-badge" id="heroPillBadge">
         <span class="pulse-dot"></span>
-        <span>AUTOMATED SPORTS INTELLIGENCE • PARIS 2024 OLYMPIC BENCHMARK</span>
+        <span class="decrypted-text" data-text="AUTOMATED SPORTS INTELLIGENCE • PARIS 2024 OLYMPIC BENCHMARK">AUTOMATED SPORTS INTELLIGENCE • PARIS 2024 OLYMPIC BENCHMARK</span>
       </div>
 
       <h1 class="hero-title">
-        Turn match video into <span class="hero-title-gradient">actionable team insight</span>
+        Turn match video into <span class="hero-title-gradient shiny-text">actionable team insight</span>
       </h1>
 
       <p class="hero-subtitle">
@@ -110,38 +111,38 @@
       </p>
 
       <div class="hero-actions">
-        <button class="btn-hero-primary" id="heroLaunchBtn">
+        <button class="btn-hero-primary magnetic-btn" id="heroLaunchBtn">
           <span>🚀</span> Start with a video
         </button>
-        <button class="btn-hero-download" id="heroDownloadBtn">
+        <button class="btn-hero-download magnetic-btn" id="heroDownloadBtn">
           <span class="dl-icon-bounce">📥</span> Download Suite
         </button>
-        <button class="btn-hero-secondary" id="heroVideoBtn">
+        <button class="btn-hero-secondary magnetic-btn" id="heroVideoBtn">
           <span>📹</span> Upload & Analyze Video
         </button>
-        <button class="btn-hero-secondary" id="heroConsensusBtn">
+        <button class="btn-hero-secondary magnetic-btn" id="heroConsensusBtn">
           <span>📊</span> See the analysis workflow
         </button>
-        <button class="btn-hero-secondary" id="heroSandboxBtn" style="display:none;">
+        <button class="btn-hero-secondary magnetic-btn" id="heroSandboxBtn" style="display:none;">
           <span>🧪</span> Formation Sandbox
         </button>
       </div>
 
-      <!-- Live Animated Counter Stats Grid -->
+      <!-- Live Animated Counter Stats Grid (Spotlight Cards from React-Bits) -->
       <div class="hero-stats-grid">
-        <div class="hero-stat-card">
+        <div class="hero-stat-card spotlight-card">
           <div class="hero-stat-number" id="heroStatModels">13</div>
           <div class="hero-stat-label">AI Classifiers (ML + DL)</div>
         </div>
-        <div class="hero-stat-card">
+        <div class="hero-stat-card spotlight-card">
           <div class="hero-stat-number" id="heroStatClips">945</div>
           <div class="hero-stat-label">Olympic Ground-Truth Clips</div>
         </div>
-        <div class="hero-stat-card">
+        <div class="hero-stat-card spotlight-card">
           <div class="hero-stat-number" id="heroStatLatency">&lt; 18ms</div>
           <div class="hero-stat-label">Real-Time Inference</div>
         </div>
-        <div class="hero-stat-card">
+        <div class="hero-stat-card spotlight-card">
           <div class="hero-stat-number" id="heroStatAgreement">83.8%</div>
           <div class="hero-stat-label">Ensemble Consensus</div>
         </div>
@@ -156,7 +157,7 @@
 
     <div class="features-grid">
       <!-- Card 1 -->
-      <div class="feature-card" data-jump="tab-radar">
+      <div class="feature-card spotlight-card" data-jump="tab-radar">
         <div class="feature-icon-wrapper" style="color: var(--accent-blue);">🎯</div>
         <h3 class="feature-title">2D Tactical Radar & Spatial Mesh</h3>
         <p class="feature-desc">Interactive spatial telemetry with Minimum Spanning Tree graph, convex hull territorial envelope, velocity vectors, and 29-frame playback.</p>
@@ -164,7 +165,7 @@
       </div>
 
       <!-- Card 2 -->
-      <div class="feature-card" data-jump="tab-video">
+      <div class="feature-card spotlight-card" data-jump="tab-video">
         <div class="feature-icon-wrapper" style="color: var(--attack-color);">📹</div>
         <h3 class="feature-title">AI Video Vision (YOLOv11-Pose + Ball)</h3>
         <p class="feature-desc">Dual detector architecture running player skeleton tracking and specialized volleyball detection with automated H.264 broadcast annotation.</p>
@@ -172,7 +173,7 @@
       </div>
 
       <!-- Card 3 -->
-      <div class="feature-card" data-jump="tab-consensus">
+      <div class="feature-card spotlight-card" data-jump="tab-consensus">
         <div class="feature-icon-wrapper" style="color: var(--defense-color);">⚔️</div>
         <h3 class="feature-title">13-Model Ensemble Consensus</h3>
         <p class="feature-desc">Simultaneous evaluation across 9 Machine Learning + 4 Deep Learning sequence models with head-to-head architectural duels.</p>
@@ -180,7 +181,7 @@
       </div>
 
       <!-- Card 4 -->
-      <div class="feature-card" data-jump="tab-sandbox">
+      <div class="feature-card spotlight-card" data-jump="tab-sandbox">
         <div class="feature-icon-wrapper" style="color: var(--spacing-color);">🧪</div>
         <h3 class="feature-title">"What-If" Formation Sandbox</h3>
         <p class="feature-desc">Tactical chalkboard with drag-and-drop nodes, official FIVB rotation simulation, and real-time inference feedback on hypothetical formations.</p>
@@ -188,7 +189,7 @@
       </div>
 
       <!-- Card 5 -->
-      <div class="feature-card" data-jump="tab-match">
+      <div class="feature-card spotlight-card" data-jump="tab-match">
         <div class="feature-icon-wrapper" style="color: var(--delayed-color);">🏐</div>
         <h3 class="feature-title">Paris 2024 Olympic Stream Replay</h3>
         <p class="feature-desc">Continuous 5-minute match stream from Japan vs Argentina with automated 309-window timeline scrubber and autoplay progression.</p>
@@ -196,7 +197,7 @@
       </div>
 
       <!-- Card 6 -->
-      <div class="feature-card" data-jump="tab-leaderboard">
+      <div class="feature-card spotlight-card" data-jump="tab-leaderboard">
         <div class="feature-icon-wrapper" style="color: var(--accent-cyan);">📊</div>
         <h3 class="feature-title">LOVO Cross-Match Benchmark</h3>
         <p class="feature-desc">Rigorous Leave-One-Video-Out validation metrics, Macro-F1 scores, and class breakdown across all 13 deployed classifiers.</p>

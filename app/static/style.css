@@ -427,6 +427,87 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
+/* ==========================================================================
+   REACT-BITS INSPIRED VISUAL EFFECTS SUITE
+   ========================================================================== */
+
+/* 1. Aurora Background Mesh */
+.aurora-bg-mesh {
+  position: absolute;
+  top: -40%;
+  left: -40%;
+  width: 180%;
+  height: 180%;
+  background: radial-gradient(circle at 50% 50%, rgba(2, 132, 199, 0.16), transparent 50%),
+              radial-gradient(circle at 25% 65%, rgba(124, 58, 237, 0.14), transparent 45%),
+              radial-gradient(circle at 75% 35%, rgba(16, 185, 129, 0.12), transparent 45%),
+              radial-gradient(circle at 80% 75%, rgba(245, 158, 11, 0.09), transparent 45%);
+  filter: blur(55px);
+  animation: auroraMorph 16s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+}
+
+@keyframes auroraMorph {
+  0% { transform: rotate(0deg) scale(1) translate(0, 0); }
+  50% { transform: rotate(180deg) scale(1.15) translate(30px, -20px); }
+  100% { transform: rotate(360deg) scale(1) translate(-20px, 15px); }
+}
+
+/* 2. Shiny / Shimmer Text Effect */
+.shiny-text {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(
+    110deg,
+    var(--text-primary) 0%,
+    var(--text-primary) 40%,
+    #38bdf8 50%,
+    var(--text-primary) 60%,
+    var(--text-primary) 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shinyShimmer 6s ease-in-out infinite;
+}
+
+@keyframes shinyShimmer {
+  0% { background-position: 120% 0; }
+  100% { background-position: -120% 0; }
+}
+
+/* 3. Spotlight Cards Glow */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-card::after {
+  content: '';
+  position: absolute;
+  top: var(--spotlight-y, -1000px);
+  left: var(--spotlight-x, -1000px);
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 65%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 10;
+}
+
+.spotlight-card:hover::after {
+  opacity: 1;
+}
+
+/* 4. Magnetic Interactive Elements */
+.magnetic-btn {
+  will-change: transform;
+}
+
 .hero-content {
   position: relative;
   z-index: 2;

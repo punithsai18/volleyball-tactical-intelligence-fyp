@@ -133,6 +133,9 @@ document.addEventListener("DOMContentLoaded", () => {
   initLenis();
   initVanta();
   initHeroConstellation();
+  initSpotlightCards();
+  initMagneticButtons();
+  initDecryptedText();
   initGSAPAnimations();
   setupLandingHeroInteractions();
 
@@ -2293,6 +2296,87 @@ function initHeroConstellation() {
     requestAnimationFrame(animate);
   }
   requestAnimationFrame(animate);
+}
+
+// ===========================================================================
+// REACT-BITS INTERACTIVE SUITE: SPOTLIGHT, MAGNET & DECRYPTED TEXT
+// ===========================================================================
+
+function initSpotlightCards() {
+  const cards = document.querySelectorAll(".spotlight-card, .glass-card, .model-card");
+  cards.forEach(card => {
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty("--spotlight-x", `${x}px`);
+      card.style.setProperty("--spotlight-y", `${y}px`);
+    });
+  });
+}
+
+function initMagneticButtons() {
+  if (typeof gsap === "undefined") return;
+  const btns = document.querySelectorAll(".magnetic-btn, .header-download-btn, .btn-hero-primary, .btn-hero-download, .nav-tab");
+  btns.forEach(btn => {
+    btn.addEventListener("mousemove", (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - (rect.left + rect.width / 2);
+      const y = e.clientY - (rect.top + rect.height / 2);
+      gsap.to(btn, {
+        x: x * 0.28,
+        y: y * 0.28,
+        duration: 0.2,
+        ease: "power2.out"
+      });
+    });
+
+    btn.addEventListener("mouseleave", () => {
+      gsap.to(btn, {
+        x: 0,
+        y: 0,
+        duration: 0.6,
+        ease: "elastic.out(1.2, 0.4)"
+      });
+    });
+  });
+}
+
+function initDecryptedText() {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789•✦#/%$";
+  const elements = document.querySelectorAll(".decrypted-text");
+
+  elements.forEach(el => {
+    const originalText = el.dataset.text || el.innerText;
+    let iteration = 0;
+    let interval = null;
+
+    function scramble() {
+      clearInterval(interval);
+      iteration = 0;
+      interval = setInterval(() => {
+        el.innerText = originalText
+          .split("")
+          .map((letter, index) => {
+            if (index < iteration) {
+              return originalText[index];
+            }
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join("");
+
+        if (iteration >= originalText.length) {
+          clearInterval(interval);
+        }
+        iteration += 1.5;
+      }, 25);
+    }
+
+    scramble();
+    if (el.parentElement) {
+      el.parentElement.addEventListener("mouseenter", scramble);
+    }
+  });
 }
 
 function initGSAPAnimations() {
