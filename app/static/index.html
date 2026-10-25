@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VolleyTactix AI - Automated Volleyball Tactical Intelligence</title>
+  <meta name="description" content="Automated tactical coordination analysis from broadcast match video using computer vision, formation tracking, and 13 machine learning and deep learning sequence classifiers.">
+  <link rel="stylesheet" href="/static/style.css">
+  
+  <!-- Lenis Smooth Scroll by darkroomengineering -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <!-- Three.js (Requirement for Vanta.js) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <!-- Vanta.js 3D Tactical Mesh Background by tengbao -->
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+  <!-- GreenSock GSAP + ScrollTrigger Animation Platform -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <!-- Chart.js for Consensus Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Ambient Floating Orb Background -->
+  <canvas id="animOrbCanvas"></canvas>
+
+  <!-- Particle Burst FX Canvas (over UI) -->
+  <canvas id="particleBurstCanvas"></canvas>
+
+  <!-- Cursor Trail Dot -->
+  <div id="cursorTrail"></div>
+
+  <!-- App Header -->
+
+  <header class="app-header">
+    <div class="brand-section" id="brandHomeLink" style="cursor: pointer;" title="Back to Hero Overview">
+      <div class="brand-logo">🏐</div>
+      <div class="brand-text">
+        <h1>VOLLEYTACTIX AI</h1>
+        <p>Tactical Formation & Collective Intelligence</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <!-- High-Visibility Top Animated Download Button -->
+      <button id="headerDownloadBtn" class="header-download-btn" title="Download Tactical Suite & Product Showcase">
+        <span class="dl-btn-icon">📥</span>
+        <span class="dl-btn-text">Download Suite</span>
+        <span class="dl-badge-tag">ZIP</span>
+      </button>
+
+      <button class="nav-overview-btn" id="navHeroBtn" title="Back to Hero Overview">
+        <span>🌟</span> Overview
+      </button>
+
+      <div class="status-badge" id="systemStatusBadge">
+        <span class="pulse-dot"></span>
+        <span id="systemStatusText">Pipeline Online</span>
+      </div>
+
+      <div class="model-selector-wrapper">
+        <label for="globalModelSelect">Active Model:</label>
+        <select id="globalModelSelect" class="model-select">
+          <option value="hist_gradient_boosting">#1 HistGradientBoosting (ML, 66.8%)</option>
+          <option value="inceptiontime">#2 InceptionTime (DL, 64.9%)</option>
+          <option value="extra_trees">#3 ExtraTrees (ML, 64.9%)</option>
+          <option value="gradient_boosting">#4 GradientBoosting (ML, 64.8%)</option>
+          <option value="rbf_svm">#5 RBF-SVM (ML, 64.2%)</option>
+          <option value="random_forest">#6 RandomForest (ML, 63.9%)</option>
+          <option value="mlp">#7 MLP Neural Net (ML, 61.1%)</option>
+          <option value="knn">#8 k-NN (ML, 60.0%)</option>
+          <option value="linear_svm">#9 Linear SVM (ML, 59.2%)</option>
+          <option value="logistic_regression">#10 LogisticRegression (ML, 58.5%)</option>
+          <option value="tcn">#11 TCN (DL, 49.0%)</option>
+          <option value="bilstm">#12 BiLSTM+Attention (DL, 48.9%)</option>
+          <option value="mamba">#13 Mamba SSM (DL, 47.1%)</option>
+        </select>
+      </div>
+
+      <button id="soundToggleBtn" class="theme-toggle-btn" title="Toggle Tactical Audio FX">
+        <span class="theme-icon" id="soundIcon">🔊</span>
+        <span class="theme-text" id="soundText">Audio: On</span>
+      </button>
+
+      <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Light / Dark Mode">
+        <span class="theme-icon" id="themeIcon">☀️</span>
+        <span class="theme-text" id="themeText">Light</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Landing Section with Vanta.js 3D Mesh & GSAP Animation -->
+  <section class="hero-landing" id="heroLanding">
+    <div id="vantaBackground" class="vanta-canvas-bg"></div>
+
+    <div class="hero-content">
+      <div class="hero-pill-badge">
+        <span class="pulse-dot"></span>
+        <span>AUTOMATED SPORTS INTELLIGENCE • PARIS 2024 OLYMPIC BENCHMARK</span>
+      </div>
+
+      <h1 class="hero-title">
+        Next-Gen Volleyball <span class="hero-title-gradient">Tactical Intelligence</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        Autonomous computer vision & spatial coordination modeling from broadcast footage.
+        Real-time collective formation tracking with 13 sequence classifiers across 4 tactical archetypes.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn-hero-primary" id="heroLaunchBtn">
+          <span>🚀</span> Launch Tactical Radar
+        </button>
+        <button class="btn-hero-download" id="heroDownloadBtn">
+          <span class="dl-icon-bounce">📥</span> Download Suite
+        </button>
+        <button class="btn-hero-secondary" id="heroVideoBtn">
+          <span>📹</span> Upload & Analyze Video
+        </button>
+        <button class="btn-hero-secondary" id="heroConsensusBtn">
+          <span>⚔️</span> 13-Model Consensus
+        </button>
+        <button class="btn-hero-secondary" id="heroSandboxBtn">
+          <span>🧪</span> Formation Sandbox
+        </button>
+      </div>
+
+      <!-- Live Animated Counter Stats Grid -->
+      <div class="hero-stats-grid">
+        <div class="hero-stat-card">
+          <div class="hero-stat-number" id="heroStatModels">13</div>
+          <div class="hero-stat-label">AI Classifiers (ML + DL)</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-number" id="heroStatClips">945</div>
+          <div class="hero-stat-label">Olympic Ground-Truth Clips</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-number" id="heroStatLatency">&lt; 18ms</div>
+          <div class="hero-stat-label">Real-Time Inference</div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-number" id="heroStatAgreement">83.8%</div>
+          <div class="hero-stat-label">Ensemble Consensus</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Showcase Section -->
+  <section class="features-section" id="featuresSection">
+    <div class="section-tag">Interactive Capabilities</div>
+    <h2 class="section-heading">Comprehensive Tactical Intelligence Suite</h2>
+
+    <div class="features-grid">
+      <!-- Card 1 -->
+      <div class="feature-card" data-jump="tab-radar">
+        <div class="feature-icon-wrapper" style="color: var(--accent-blue);">🎯</div>
+        <h3 class="feature-title">2D Tactical Radar & Spatial Mesh</h3>
+        <p class="feature-desc">Interactive spatial telemetry with Minimum Spanning Tree graph, convex hull territorial envelope, velocity vectors, and 29-frame playback.</p>
+        <div class="feature-link">Explore Court Radar →</div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="feature-card" data-jump="tab-video">
+        <div class="feature-icon-wrapper" style="color: var(--attack-color);">📹</div>
+        <h3 class="feature-title">AI Video Vision (YOLOv11-Pose + Ball)</h3>
+        <p class="feature-desc">Dual detector architecture running player skeleton tracking and specialized volleyball detection with automated H.264 broadcast annotation.</p>
+        <div class="feature-link">Analyze Match Video →</div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="feature-card" data-jump="tab-consensus">
+        <div class="feature-icon-wrapper" style="color: var(--defense-color);">⚔️</div>
+        <h3 class="feature-title">13-Model Ensemble Consensus</h3>
+        <p class="feature-desc">Simultaneous evaluation across 9 Machine Learning + 4 Deep Learning sequence models with head-to-head architectural duels.</p>
+        <div class="feature-link">Compare 13 Models →</div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="feature-card" data-jump="tab-sandbox">
+        <div class="feature-icon-wrapper" style="color: var(--spacing-color);">🧪</div>
+        <h3 class="feature-title">"What-If" Formation Sandbox</h3>
+        <p class="feature-desc">Tactical chalkboard with drag-and-drop nodes, official FIVB rotation simulation, and real-time inference feedback on hypothetical formations.</p>
+        <div class="feature-link">Open Sandbox →</div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="feature-card" data-jump="tab-match">
+        <div class="feature-icon-wrapper" style="color: var(--delayed-color);">🏐</div>
+        <h3 class="feature-title">Paris 2024 Olympic Stream Replay</h3>
+        <p class="feature-desc">Continuous 5-minute match stream from Japan vs Argentina with automated 309-window timeline scrubber and autoplay progression.</p>
+        <div class="feature-link">Watch Olympic Replay →</div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="feature-card" data-jump="tab-leaderboard">
+        <div class="feature-icon-wrapper" style="color: var(--accent-cyan);">📊</div>
+        <h3 class="feature-title">LOVO Cross-Match Benchmark</h3>
+        <p class="feature-desc">Rigorous Leave-One-Video-Out validation metrics, Macro-F1 scores, and class breakdown across all 13 deployed classifiers.</p>
+        <div class="feature-link">View Leaderboard →</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Tactical Workspace -->
+  <div class="workspace-section" id="workspaceSection">
+    <div class="workspace-header-anchor">
+      <span class="pulse-dot"></span>
+      <span>LIVE ANALYTICS WORKSPACE</span>
+    </div>
+
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs" role="tablist">
+    <button class="nav-tab active" data-tab="tab-radar" id="navRadarBtn">
+      <span>🎯</span> Tactical Radar
+    </button>
+    <button class="nav-tab" data-tab="tab-consensus" id="navConsensusBtn">
+      <span>⚔️</span> 13-Model Consensus
+    </button>
+    <button class="nav-tab" data-tab="tab-match" id="navMatchBtn">
+      <span>🏐</span> Paris 2024 Olympic Replay
+    </button>
+    <button class="nav-tab" data-tab="tab-sandbox" id="navSandboxBtn">
+      <span>🧪</span> Formation Sandbox
+    </button>
+    <button class="nav-tab" data-tab="tab-leaderboard" id="navLeaderboardBtn">
+      <span>📊</span> Model Zoo & LOVO Leaderboard
+    </button>
+    <button class="nav-tab" data-tab="tab-video" id="navVideoBtn">
+      <span>📹</span> Upload Video & Analyze
+    </button>
+    <button class="nav-tab" data-tab="tab-upload" id="navUploadBtn">
+      <span>📁</span> Upload Rally CSV
+    </button>
+  </nav>
+
+  <!-- Live Stats KPI Strip -->
+  <div class="kpi-ticker-ribbon">
+    <div class="kpi-ticker-item">
+      <span class="kpi-icon">🏐</span>
+      <div>
+        <div class="kpi-value">Paris 2024 Olympic Dataset</div>
+        <div class="kpi-label">309 Continuous Tracking Windows • 30 FPS</div>
+      </div>
+    </div>
+    <div class="kpi-ticker-item">
+      <span class="kpi-icon">🧠</span>
+      <div>
+        <div class="kpi-value">13 Ensemble Classifiers</div>
+        <div class="kpi-label">9 ML & 4 DL (HistGradient #1 66.8% LOVO)</div>
+      </div>
+    </div>
+    <div class="kpi-ticker-item">
+      <span class="kpi-icon">⚡</span>
+      <div>
+        <div class="kpi-value">&lt; 18ms Inference</div>
+        <div class="kpi-label">Real-Time Invariant 18-Dim Geometry</div>
+      </div>
+    </div>
+    <div class="kpi-ticker-item">
+      <span class="kpi-icon">🎯</span>
+      <div>
+        <div class="kpi-value">83.8% Consensus Rate</div>
+        <div class="kpi-label">Inter-Model Stability & Low-Entropy Gated</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="main-container">
+
+    <!-- TAB 1: TACTICAL RADAR (LIVE INFERENCE & COURT) -->
+    <section id="tab-radar" class="tab-pane active">
+      <!-- Quick Sample Clips Selector -->
+      <div class="sample-bar" id="sampleBar">
+        <span class="sample-bar-label">Rally Clips:</span>
+        <div id="sampleChipsList" style="display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 2px;">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Left Column: 2D Volleyball Court Visualizer -->
+        <div class="glass-card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title"><span>🏟️</span> Court Spatial Mesh & Formation</h2>
+              <div class="card-subtitle" id="currentClipSubtitle">USA vs Argentina • Rally Window (29 frames @ 30fps)</div>
+            </div>
+            <!-- Spatial Layer Controls -->
+            <div class="layer-toggle-strip" id="layerToggleStrip">
+              <button class="layer-toggle-btn active" data-layer="hull" id="toggleLayerHull" title="Toggle Convex Hull Area"><span>🔷</span> Hull</button>
+              <button class="layer-toggle-btn active" data-layer="mst" id="toggleLayerMst" title="Toggle Formation Graph"><span>🕸️</span> MST</button>
+              <button class="layer-toggle-btn active" data-layer="heatmap" id="toggleLayerHeatmap" title="Toggle Territorial Heatmap Density"><span>🔥</span> Heatmap</button>
+              <button class="layer-toggle-btn active" data-layer="vectors" id="toggleLayerVectors" title="Toggle Velocity Vectors"><span>🏹</span> Vectors</button>
+              <button class="layer-toggle-btn active" data-layer="zones" id="toggleLayerZones" title="Toggle FIVB Zones 1-6"><span>🎯</span> Zones</button>
+              <button class="layer-toggle-btn active" data-layer="trails" id="toggleLayerTrails" title="Toggle Motion Trails"><span>✨</span> Trails</button>
+              <button class="layer-toggle-btn active" data-layer="centroid" id="toggleLayerCentroid" title="Toggle Team Centroid"><span>⭐</span> Centroid</button>
+              <button class="layer-toggle-btn active" data-layer="roles" id="toggleLayerRoles" title="Toggle Player Roles"><span>🏷️</span> Roles</button>
+            </div>
+          </div>
+
+          <!-- Canvas Element -->
+          <div class="court-container">
+            <canvas id="courtCanvas" width="760" height="440"></canvas>
+          </div>
+
+          <!-- Playback Controls -->
+          <div class="playback-controls">
+            <button class="control-btn" id="playBtn" title="Play / Pause">▶</button>
+            <button class="control-btn" id="prevBtn" title="Previous Frame">⏮</button>
+            <button class="control-btn" id="nextBtn" title="Next Frame">⏭</button>
+            <input type="range" class="timeline-slider" id="frameSlider" min="0" max="28" value="0">
+            <span class="frame-counter" id="frameCounter">Frame 1 / 29 (0.00s)</span>
+            <button class="control-btn" id="speedBtn" title="Toggle Playback Speed" style="width: auto; padding: 0 0.6rem; border-radius: var(--radius-sm); font-size: 0.75rem; font-weight: 700;">1.0x</button>
+          </div>
+        </div>
+
+        <!-- Right Column: Tactical Verdict & Metrics -->
+        <div class="glass-card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title"><span>⚡</span> Real-time Tactical Verdict</h2>
+              <div class="card-subtitle" id="verdictSubtitle">Active Model: HistGradientBoosting</div>
+            </div>
+            <div style="display: flex; gap: 0.4rem; align-items: center;">
+              <button class="btn btn-secondary" id="exportReportBtn" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;" title="Download JSON/Analytical Report">
+                <span>📥</span> Export JSON
+              </button>
+              <button class="btn btn-secondary" id="reRunInferenceBtn" style="padding: 0.35rem 0.75rem; font-size: 0.75rem;">
+                <span>🔄</span> Refresh
+              </button>
+            </div>
+          </div>
+
+          <!-- Hero Verdict Box -->
+          <div class="verdict-hero" id="verdictHero" style="background: rgba(245, 158, 11, 0.12); border-color: rgba(245, 158, 11, 0.4);">
+            <div class="verdict-header">
+              <div>
+                <div class="verdict-category" id="verdictCategory" style="color: var(--attack-color);">Offensive Structure</div>
+                <div class="verdict-badge" id="verdictLabel" style="color: var(--attack-color);">Coordinated Attack</div>
+              </div>
+              <div class="confidence-box">
+                <div class="conf-val" id="confidenceValue" style="color: var(--attack-color);">81.3%</div>
+                <div class="conf-label">Confidence</div>
+              </div>
+            </div>
+
+            <div class="conf-bar-container">
+              <div class="conf-bar-fill" id="confidenceBarFill" style="width: 81.3%; background: var(--attack-color);"></div>
+            </div>
+
+            <p class="verdict-desc" id="verdictDescription">
+              Fast approach by front-court attackers with base players held near the net. The attacking corridor is opened with synchronized acceleration.
+            </p>
+          </div>
+
+          <!-- Shannon Entropy & Anomaly Status -->
+          <div style="display: flex; gap: 0.75rem; margin-bottom: 1.25rem;">
+            <div class="telemetry-tile" style="flex: 1;">
+              <div class="tile-label">Shannon Entropy</div>
+              <div class="tile-val" id="entropyVal" style="font-size: 1rem;">0.64 bits</div>
+            </div>
+            <div class="telemetry-tile" style="flex: 1;" id="anomalyTile">
+              <div class="tile-label">Deployment Gate</div>
+              <div class="tile-val" id="anomalyVal" style="font-size: 1rem; color: var(--defense-color);">Nominal (Valid)</div>
+            </div>
+          </div>
+
+          <!-- Probability Distribution Bars -->
+          <div class="prob-section">
+            <div class="prob-title">Class Probabilities Distribution</div>
+            
+            <div class="prob-row">
+              <div class="prob-row-header">
+                <span style="color: var(--attack-color);">Coordinated Attack</span>
+                <span id="probValAttack">81.3%</span>
+              </div>
+              <div class="prob-track">
+                <div class="prob-fill" id="probFillAttack" style="width: 81.3%; background: var(--attack-color);"></div>
+              </div>
+            </div>
+
+            <div class="prob-row">
+              <div class="prob-row-header">
+                <span style="color: var(--defense-color);">Coordinated Defense</span>
+                <span id="probValDefense">4.9%</span>
+              </div>
+              <div class="prob-track">
+                <div class="prob-fill" id="probFillDefense" style="width: 4.9%; background: var(--defense-color);"></div>
+              </div>
+            </div>
+
+            <div class="prob-row">
+              <div class="prob-row-header">
+                <span style="color: var(--delayed-color);">Delayed Support</span>
+                <span id="probValDelayed">8.7%</span>
+              </div>
+              <div class="prob-track">
+                <div class="prob-fill" id="probFillDelayed" style="width: 8.7%; background: var(--delayed-color);"></div>
+              </div>
+            </div>
+
+            <div class="prob-row">
+              <div class="prob-row-header">
+                <span style="color: var(--spacing-color);">Spacing Breakdown</span>
+                <span id="probValSpacing">5.1%</span>
+              </div>
+              <div class="prob-track">
+                <div class="prob-fill" id="probFillSpacing" style="width: 5.1%; background: var(--spacing-color);"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formation Geometry Telemetry -->
+          <div class="telemetry-grid">
+            <div class="telemetry-tile">
+              <div class="tile-label">Team Compactness</div>
+              <div class="tile-val" id="telemetryCompactness">142.8 m²</div>
+            </div>
+            <div class="telemetry-tile">
+              <div class="tile-label">Max Spread (Span)</div>
+              <div class="tile-val" id="telemetrySpread">8.42 m</div>
+            </div>
+            <div class="telemetry-tile">
+              <div class="tile-label">Nearest Pair Dist</div>
+              <div class="tile-val" id="telemetryMinDist">1.94 m</div>
+            </div>
+            <div class="telemetry-tile">
+              <div class="tile-label">Active On-Court</div>
+              <div class="tile-val" id="telemetryActivePlayers">6 / 6 Players</div>
+            </div>
+          </div>
+
+          <!-- AI Tactical Spatial Reasoning & Explainability Card -->
+          <div class="explainability-card" id="explainabilityCard">
+            <div class="explain-header">
+              <div class="explain-title">
+                <span>🧠</span> AI Tactical Spatial Reasoning
+              </div>
+              <span class="explain-badge" id="explainSpatialBadge">Net Envelope Active</span>
+            </div>
+            <div class="explain-body" id="explainabilityContent">
+              <p id="explainText">Players demonstrate tight clustering along the 3m attack zone with synchronized forward velocity. The primary setter-spiker vector exhibits minimal angular entropy.</p>
+              <div class="explain-tags" id="explainTags">
+                <span class="tag-pill">🎯 Net Distance: 2.1m</span>
+                <span class="tag-pill">⚡ Synchrony: 89%</span>
+                <span class="tag-pill">📐 Hull Ratio: 0.64</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: 13-MODEL CONSENSUS & BENCHMARKING -->
+    <section id="tab-consensus" class="tab-pane">
+      <div class="glass-card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title"><span>⚔️</span> Ensemble Consensus & Model Agreement</h2>
+            <div class="card-subtitle">Evaluating the current 1-second rally clip across all 9 Machine Learning + 4 Deep Learning models</div>
+          </div>
+          <button class="btn btn-primary" id="refreshConsensusBtn">
+            <span>⚡</span> Run All 13 Models
+          </button>
+        </div>
+
+        <!-- Consensus Hero Banner -->
+        <div class="consensus-hero" id="consensusHero">
+          <div>
+            <div class="consensus-stat-title">13-Model Ensemble Decision</div>
+            <div class="consensus-stat-val" id="consensusLabel">Coordinated Attack</div>
+          </div>
+          <div style="text-align: center;">
+            <div class="consensus-stat-title">Consensus Rate</div>
+            <div class="consensus-stat-val" id="consensusPct" style="color: #ffffff;">92.3%</div>
+          </div>
+          <div style="text-align: right;">
+            <div class="consensus-stat-title">Agreement Score</div>
+            <div class="consensus-stat-val" id="consensusVotes" style="color: var(--defense-color);">12 of 13 Models</div>
+          </div>
+        </div>
+
+        <!-- Consensus Vote Distribution Chart -->
+        <div style="background: var(--bg-tertiary); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.5rem; height: 160px;">
+          <canvas id="consensusVoteChart"></canvas>
+        </div>
+
+        <!-- Dual Model Head-to-Head Duel Card -->
+        <div class="duel-card" style="margin-top: 1.5rem; background: var(--bg-tertiary); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 1.25rem;">
+          <div class="card-header" style="margin-bottom: 0.75rem; padding-bottom: 0.5rem;">
+            <h3 class="card-title" style="font-size: 1.05rem;"><span>⚔️</span> Model Duel: Side-by-Side Architectural Comparison</h3>
+            <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+              <select id="duelModelA" class="model-select" style="background: var(--bg-secondary); padding: 0.3rem 0.6rem; border-radius: 6px; border: 1px solid var(--border-glass);">
+                <option value="hist_gradient_boosting">Model A: HistGradientBoosting (ML #1)</option>
+                <option value="extra_trees">Model A: ExtraTrees (ML #3)</option>
+                <option value="gradient_boosting">Model A: GradientBoosting (ML #4)</option>
+              </select>
+              <span style="font-weight: 800; color: var(--accent-blue);">VS</span>
+              <select id="duelModelB" class="model-select" style="background: var(--bg-secondary); padding: 0.3rem 0.6rem; border-radius: 6px; border: 1px solid var(--border-glass);">
+                <option value="inceptiontime">Model B: InceptionTime (DL #2)</option>
+                <option value="tcn">Model B: TCN (DL #11)</option>
+                <option value="mamba">Model B: Mamba SSM (DL #13)</option>
+              </select>
+              <button class="btn btn-primary" id="runDuelBtn" style="padding: 0.35rem 0.85rem; font-size: 0.78rem;">Compare Duel</button>
+            </div>
+          </div>
+          <div id="duelResultsContainer" class="dashboard-grid" style="grid-template-columns: 1fr 1fr; margin-top: 0.5rem;">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+
+        <!-- All 13 Models Grid -->
+        <div class="models-grid" id="modelsGridContainer">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: OLYMPIC MATCH REPLAY (PARIS 2024 JAPAN VS ARGENTINA) -->
+    <section id="tab-match" class="tab-pane">
+      <div class="glass-card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title"><span>🏐</span> Paris 2024 Olympics: Japan vs Argentina (5-Min Match Stream)</h2>
+            <div class="card-subtitle">Full segment (03:00 to 08:00) with 300 1-second tactical sequence windows</div>
+          </div>
+        </div>
+
+        <!-- Replay Autoplay Controls Strip -->
+        <div class="match-stream-controls">
+          <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+            <button class="btn btn-primary" id="matchReplayPlayBtn"><span>▶</span> Auto-Play Match Stream</button>
+            <button class="btn btn-secondary" id="matchReplayPrevBtn">⏮ Prev Sec</button>
+            <button class="btn btn-secondary" id="matchReplayNextBtn">⏭ Next Sec</button>
+            <button class="btn btn-secondary" id="matchReplaySpeedBtn">⚡ 1.0x Speed</button>
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">
+            Active Window: <span id="matchActiveWinIndicator" style="color: var(--accent-blue); font-weight: 700;">Window #1 of 309</span>
+          </div>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.85rem 0 0.5rem;">
+          Click anywhere along the timeline below to inspect that rally second across the models:
+        </p>
+
+        <!-- Interactive 5-Minute Timeline Strip -->
+        <div class="timeline-strip-container">
+          <div class="timeline-strip" id="matchTimelineStrip">
+            <!-- 300 segments populated via JS -->
+          </div>
+        </div>
+
+        <!-- Selected Match Window Inspector -->
+        <div class="dashboard-grid" style="margin-top: 1.5rem;">
+          <div class="glass-card" style="background: var(--bg-tertiary);">
+            <h3 class="card-title" style="font-size: 1rem; margin-bottom: 0.75rem;">Selected Window Telemetry</h3>
+            <div class="telemetry-grid">
+              <div class="telemetry-tile">
+                <div class="tile-label">Window Sequence</div>
+                <div class="tile-val" id="matchWinSeq">#1</div>
+              </div>
+              <div class="telemetry-tile">
+                <div class="tile-label">Match Time</div>
+                <div class="tile-val" id="matchWinTime">03:00.4 - 03:01.3</div>
+              </div>
+              <div class="telemetry-tile">
+                <div class="tile-label">Majority Verdict</div>
+                <div class="tile-val" id="matchWinMajority" style="color: var(--defense-color);">Coordinated Defense</div>
+              </div>
+              <div class="telemetry-tile">
+                <div class="tile-label">Ensemble Agreement</div>
+                <div class="tile-val" id="matchWinAgreement">12 / 13 Models</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card" style="background: var(--bg-tertiary);">
+            <h3 class="card-title" style="font-size: 1rem; margin-bottom: 0.75rem;">Dual Model Comparison</h3>
+            <div style="margin-bottom: 1rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.25rem;">
+                <span>#1 HistGradientBoosting (ML)</span>
+                <span id="matchWinHgbLabel" style="color: var(--defense-color);">Coordinated Defense (72.5%)</span>
+              </div>
+              <div class="prob-track">
+                <div class="prob-fill" id="matchWinHgbBar" style="width: 72.5%; background: var(--defense-color);"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.25rem;">
+                <span>#2 InceptionTime (DL)</span>
+                <span id="matchWinDlLabel" style="color: var(--defense-color);">Coordinated Defense (76.9%)</span>
+              </div>
+              <div class="prob-track">
+                <div class="prob-fill" id="matchWinDlBar" style="width: 76.9%; background: var(--defense-color);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: INTERACTIVE FORMATION SANDBOX -->
+    <section id="tab-sandbox" class="tab-pane">
+      <div class="glass-card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title"><span>🧪</span> Interactive Formation Designer & "What-If" Sandbox</h2>
+            <div class="card-subtitle">Drag & drop players (P1-P6) and the volleyball on the court to observe real-time model predictions!</div>
+          </div>
+          <div class="preset-pill-group" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="btn btn-secondary preset-btn" id="sandboxAttackPresetBtn"><span>⚡</span> Quick Attack</button>
+            <button class="btn btn-secondary preset-btn" id="sandboxDefensePresetBtn"><span>🛡️</span> Perimeter Defense</button>
+            <button class="btn btn-secondary preset-btn" id="sandboxDelayedPresetBtn"><span>🌸</span> Delayed Dig</button>
+            <button class="btn btn-secondary preset-btn" id="sandboxBreakdownPresetBtn"><span>⚠️</span> Spacing Error</button>
+            <button class="btn btn-primary preset-btn" id="sandboxRotateBtn" style="background: linear-gradient(135deg, #0284c7, #2563eb);"><span>🔄</span> FIVB Auto-Rotate</button>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div>
+            <div class="court-container">
+              <canvas id="sandboxCanvas" width="760" height="440"></canvas>
+            </div>
+            <div style="margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted); text-align: center;">
+              💡 <strong>Interactive:</strong> Click and drag any player node (P1-P6) or the gold volleyball to reform the tactical pattern.
+            </div>
+          </div>
+
+          <div class="glass-card" style="background: var(--bg-tertiary);">
+            <div class="card-header">
+              <h3 class="card-title" style="font-size: 1.05rem;">Live Simulated Call</h3>
+            </div>
+            
+            <div class="verdict-hero" id="sandboxVerdictHero" style="background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.4);">
+              <div class="verdict-header">
+                <div>
+                  <div class="verdict-category" id="sandboxCategory">Tactical State</div>
+                  <div class="verdict-badge" id="sandboxLabel" style="color: var(--defense-color);">Coordinated Defense</div>
+                </div>
+                <div class="confidence-box">
+                  <div class="conf-val" id="sandboxConfVal" style="color: var(--defense-color);">78.4%</div>
+                  <div class="conf-label">Confidence</div>
+                </div>
+              </div>
+              <div class="conf-bar-container">
+                <div class="conf-bar-fill" id="sandboxConfBar" style="width: 78.4%; background: var(--defense-color);"></div>
+              </div>
+            </div>
+
+            <div class="telemetry-grid">
+              <div class="telemetry-tile">
+                <div class="tile-label">Simulated Area</div>
+                <div class="tile-val" id="sandboxArea">128.5 m²</div>
+              </div>
+              <div class="telemetry-tile">
+                <div class="tile-label">Simulated Spread</div>
+                <div class="tile-val" id="sandboxSpread">7.92 m</div>
+              </div>
+            </div>
+
+            <!-- Live Selected Node Telemetry Inspector -->
+            <div class="player-inspector-card" style="margin-top: 1rem; background: var(--bg-secondary); border: 1px solid var(--border-glass); border-radius: var(--radius-sm); padding: 0.85rem;">
+              <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 700; color: var(--text-muted); margin-bottom: 0.4rem;">
+                🎯 Interactive Node Inspector
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.8rem;">
+                <div><span style="color: var(--text-muted);">Active Node:</span> <strong id="inspNode" style="color: var(--accent-blue);">Player P6 (Spiker)</strong></div>
+                <div><span style="color: var(--text-muted);">FIVB Zone:</span> <strong id="inspZone">Zone 4 (Front-Left)</strong></div>
+                <div><span style="color: var(--text-muted);">Court Coord:</span> <strong id="inspCoord">[1250, 560]</strong></div>
+                <div><span style="color: var(--text-muted);">Net Distance:</span> <strong id="inspNetDist">1.82 m</strong></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: MODEL ZOO & LOVO LEADERBOARD -->
+    <section id="tab-leaderboard" class="tab-pane">
+      <div class="glass-card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title"><span>📊</span> Leave-One-Video-Out (LOVO) Cross-Match Benchmark</h2>
+            <div class="card-subtitle">Evaluated strictly on held-out match video (945 hand-annotated rally clips)</div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="custom-table" id="leaderboardTable">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Model</th>
+                <th>Architecture Family</th>
+                <th>LOVO Test Accuracy</th>
+                <th>LOVO Macro-F1</th>
+                <th>Train Accuracy</th>
+                <th>Attack F1</th>
+                <th>Defense F1</th>
+                <th>Delayed Support F1</th>
+                <th>Spacing Breakdown F1</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardTbody">
+              <!-- Populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: UPLOAD RALLY CSV -->
+    <section id="tab-upload" class="tab-pane">
+      <div class="glass-card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title"><span>📁</span> Upload Rally Coordinate CSV</h2>
+            <div class="card-subtitle">Upload custom tracked coordinates with columns (frame_id, ball_x, ball_y, p1_x, p1_y, ..., p6_x, p6_y)</div>
+          </div>
+        </div>
+
+        <div class="dropzone" id="csvDropzone">
+          <div class="dropzone-icon">📥</div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem;">Drag & drop your rally CSV here</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">or click to browse files from your computer</p>
+          <input type="file" id="csvFileInput" accept=".csv" style="display: none;">
+          <button class="btn btn-primary" onclick="document.getElementById('csvFileInput').click();">Select CSV File</button>
+        </div>
+
+        <div id="uploadResultContainer" style="display: none; margin-top: 1.5rem;">
+          <!-- Displays result after upload -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: UPLOAD VIDEO & ANALYZE -->
+    <section id="tab-video" class="tab-pane">
+      <div class="glass-card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title"><span>📹</span> Upload Match Video for Tactical Analysis</h2>
+            <div class="card-subtitle">Upload raw volleyball broadcast video (MP4/MOV/AVI) to run dual detection, formation tracking, and 13-model tactical inference</div>
+          </div>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <button class="btn btn-primary" id="trySampleVideoBtn">
+              <span>▶</span> Try Sample Rally (coordAttack.mp4)
+            </button>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Left: Video Dropzone & Settings -->
+          <div>
+            <div class="dropzone" id="videoDropzone">
+              <div class="dropzone-icon">🎥</div>
+              <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem;">Drag & drop your Volleyball Video here</h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">Supported formats: MP4, MOV, AVI, WebM</p>
+              <input type="file" id="videoFileInput" accept="video/*" style="display: none;">
+              <button class="btn btn-primary" onclick="document.getElementById('videoFileInput').click();">Select Video File</button>
+            </div>
+
+            <div style="margin-top: 1.25rem; background: var(--bg-tertiary); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-glass);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <label style="font-size: 0.85rem; font-weight: 600;">Analysis Model:</label>
+                <select id="videoModelSelect" class="model-select" style="background: var(--bg-secondary); padding: 0.3rem 0.6rem; border-radius: 6px; border: 1px solid var(--border-glass);">
+                  <option value="hist_gradient_boosting">#1 HistGradientBoosting (Deployed ML, 66.8%)</option>
+                  <option value="inceptiontime">#2 InceptionTime (Top DL, 64.9%)</option>
+                  <option value="extra_trees">#3 ExtraTrees (ML, 64.9%)</option>
+                  <option value="gradient_boosting">#4 GradientBoosting (ML, 64.8%)</option>
+                  <option value="rbf_svm">#5 RBF-SVM (ML, 64.2%)</option>
+                  <option value="random_forest">#6 RandomForest (ML, 63.9%)</option>
+                  <option value="mamba">#13 Mamba SSM (DL, 47.1%)</option>
+                </select>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label style="font-size: 0.85rem; font-weight: 600;">Max Duration to Analyze:</label>
+                <select id="videoDurationSelect" class="model-select" style="background: var(--bg-secondary); padding: 0.3rem 0.6rem; border-radius: 6px; border: 1px solid var(--border-glass);">
+                  <option value="5">5 Seconds (Fast)</option>
+                  <option value="10" selected>10 Seconds (Standard Rally)</option>
+                  <option value="15">15 Seconds (Full Sequence)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Loading Spinner & Progress -->
+            <div id="videoProcessingProgress" style="display: none; margin-top: 1.25rem; background: rgba(6, 182, 212, 0.08); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: var(--radius-md); padding: 1.25rem; text-align: center;">
+              <div style="font-size: 1.5rem; margin-bottom: 0.5rem; animation: spin 1.5s linear infinite;">⚙️</div>
+              <h4 style="font-family: 'Outfit'; font-size: 1.05rem; margin-bottom: 0.3rem;">Processing Video & Tracking Formations...</h4>
+              <p style="font-size: 0.82rem; color: var(--text-muted);" id="videoStatusMessage">Running dual detection (Players + Ball) and learned tactical classifier...</p>
+              <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-top: 1rem; overflow: hidden;">
+                <div id="videoProgressBar" style="height: 100%; width: 100%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Video Player & Output Results -->
+          <div>
+            <div id="videoOutputPlaceholder" style="background: #0b1322; border-radius: var(--radius-md); border: 1px dashed var(--border-glass); height: 420px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted);">
+              <div style="font-size: 3rem; margin-bottom: 0.75rem; opacity: 0.4;">🎬</div>
+              <p style="font-size: 0.95rem; font-weight: 500;">No video analyzed yet</p>
+              <p style="font-size: 0.8rem; opacity: 0.7;">Upload a video or click "Try Sample Rally" to view the annotated broadcast output</p>
+            </div>
+
+            <div id="videoOutputContainer" style="display: none;">
+              <!-- Embedded HTML5 Video Player -->
+              <div style="position: relative; background: #000; border-radius: var(--radius-md); overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6); border: 1px solid rgba(6, 182, 212, 0.3);">
+                <video id="annotatedVideoPlayer" controls autoplay loop playsinline style="width: 100%; height: auto; display: block;"></video>
+              </div>
+
+              <!-- Output Verdict Card -->
+              <div style="margin-top: 1rem; background: var(--bg-tertiary); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                  <div>
+                    <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Dominant Rally Tactic</span>
+                    <div id="videoDominantTactic" style="font-family: 'Outfit'; font-size: 1.35rem; font-weight: 800; color: var(--attack-color);">Coordinated Attack</div>
+                  </div>
+                  <a id="videoDownloadBtn" href="#" download class="btn btn-primary" style="padding: 0.45rem 0.9rem; font-size: 0.8rem;">
+                    <span>📥</span> Download Annotated Video
+                  </a>
+                </div>
+
+                <div class="telemetry-grid">
+                  <div class="telemetry-tile">
+                    <div class="tile-label">Processed Duration</div>
+                    <div class="tile-val" id="videoDurationVal">1.43s (43 frames)</div>
+                  </div>
+                  <div class="telemetry-tile">
+                    <div class="tile-label">Model Used</div>
+                    <div class="tile-val" id="videoModelVal" style="font-size: 1rem;">HistGradientBoosting</div>
+                  </div>
+                </div>
+
+                <!-- Per-second Windows Table -->
+                <div style="margin-top: 1rem;">
+                  <h4 style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem;">Rally Tactical Timeline</h4>
+                  <div style="max-height: 150px; overflow-y: auto;">
+                    <table class="custom-table" style="font-size: 0.8rem;">
+                      <thead>
+                        <tr>
+                          <th>Time (s)</th>
+                          <th>Tactic Call</th>
+                          <th>Confidence</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="videoWindowsTbody">
+                        <!-- Populated via JS -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- =========================================================================
+       PRODUCT SHOWCASE & DOWNLOAD MODAL
+       ========================================================================= -->
+  <div class="product-modal-backdrop" id="productShowcaseModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="product-modal-card">
+      
+      <!-- Modal Header -->
+      <div class="modal-card-header">
+        <div class="modal-title-wrap">
+          <div class="modal-eyebrow">
+            <span class="modal-pulse-dot"></span>
+            <span>PRODUCT SHOWCASE & DOWNLOAD PORTAL</span>
+          </div>
+          <h2 class="modal-title">VolleyTactix AI Tactical Intelligence Suite</h2>
+          <p class="modal-desc">Scroll horizontally to inspect system features, spatial visualizers, and benchmark charts.</p>
+        </div>
+        <button class="modal-close-btn" id="modalCloseBtn" title="Close Gallery">✕</button>
+      </div>
+
+      <!-- Horizontal Scrolling Product Photos Carousel -->
+      <div class="modal-gallery-container">
+        <!-- Controls: Left and Right Scroll Buttons -->
+        <button class="gallery-nav-btn prev-btn" id="galleryPrevBtn" title="Scroll Left">‹</button>
+        <button class="gallery-nav-btn next-btn" id="galleryNextBtn" title="Scroll Right">›</button>
+
+        <div class="modal-photo-carousel" id="modalPhotoCarousel">
+          <!-- Card 1 -->
+          <div class="photo-slide-card">
+            <div class="slide-image-wrapper">
+              <img src="/static/gallery/01_court_radar.png" alt="2D Tactical Radar & Court Trajectories" loading="lazy">
+              <span class="slide-badge">2D Court Radar</span>
+            </div>
+            <div class="slide-content">
+              <h4>Court Spatial Mesh & Formation Tracking</h4>
+              <p>Convex hull territorial envelope, minimum spanning tree graph, and real-time velocity vectors across 29 frames.</p>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="photo-slide-card">
+            <div class="slide-image-wrapper">
+              <img src="/static/gallery/02_vision_tracking.png" alt="YOLOv11 AI Video Detection" loading="lazy">
+              <span class="slide-badge">AI Video Vision</span>
+            </div>
+            <div class="slide-content">
+              <h4>Dual-Detector Computer Vision Tracking</h4>
+              <p>Simultaneous player pose skeleton extraction and specialized volleyball tracking with broadcast telemetry annotation.</p>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="photo-slide-card">
+            <div class="slide-image-wrapper">
+              <img src="/static/gallery/03_tactical_fingerprint.png" alt="Tactical Fingerprint Analysis" loading="lazy">
+              <span class="slide-badge">Spatial Biomechanics</span>
+            </div>
+            <div class="slide-content">
+              <h4>Tactical Fingerprint & Coordination Archetypes</h4>
+              <p>Invariant feature profiling distinguishing Coordinated Attack, Coordinated Defense, Delayed Support, and Spacing Breakdown.</p>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="photo-slide-card">
+            <div class="slide-image-wrapper">
+              <img src="/static/gallery/04_model_consensus.png" alt="13-Model Ensemble Benchmark" loading="lazy">
+              <span class="slide-badge">Ensemble Consensus</span>
+            </div>
+            <div class="slide-content">
+              <h4>13-Model Ensemble & Confusion Duel</h4>
+              <p>Simultaneous inference across 9 ML and 4 Deep Learning sequence classifiers with architectural head-to-head duels.</p>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="photo-slide-card">
+            <div class="slide-image-wrapper">
+              <img src="/static/gallery/05_olympic_timeline.png" alt="Paris 2024 Olympic Match Replay" loading="lazy">
+              <span class="slide-badge">Olympic Replay</span>
+            </div>
+            <div class="slide-content">
+              <h4>Paris 2024 Continuous Stream (309 Windows)</h4>
+              <p>Full 5-minute match telemetry stream from Japan vs Argentina with interactive scrubber and autoplay sequence tracking.</p>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="photo-slide-card">
+            <div class="slide-image-wrapper">
+              <img src="/static/gallery/06_pipeline_architecture.png" alt="End-to-End Pipeline Architecture" loading="lazy">
+              <span class="slide-badge">Pipeline Workflow</span>
+            </div>
+            <div class="slide-content">
+              <h4>End-to-End System Architecture</h4>
+              <p>Raw video ingestion, 18-dimensional invariant geometry transformation, and low-entropy tactical consensus verdict.</p>
+            </div>
+          </div>
+
+          <!-- Card 7 -->
+          <div class="photo-slide-card">
+            <div class="slide-image-wrapper">
+              <img src="/static/gallery/07_lovo_benchmark.png" alt="LOVO Cross-Match Benchmark" loading="lazy">
+              <span class="slide-badge">LOVO Benchmark</span>
+            </div>
+            <div class="slide-content">
+              <h4>Leave-One-Video-Out Evaluation Matrix</h4>
+              <p>Rigorous cross-match generalization validation demonstrating HistGradientBoosting #1 accuracy (66.8% LOVO, 0.66 Macro-F1).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Helper Indicator -->
+      <div class="gallery-scroll-hint">
+        <span>👈 Drag or click arrows to scroll product photos 👉</span>
+      </div>
+
+      <!-- Action Footer: Prominent Animated Download Button (Below Photos) -->
+      <div class="modal-download-footer">
+        <a href="/api/download-suite" download="volleytactix_ai_tactical_suite.zip" class="btn-modal-download-primary" id="modalDownloadMainBtn">
+          <span class="dl-anim-icon">📥</span>
+          <div class="dl-text-wrap">
+            <span class="dl-main-title">Download Complete Tactical Suite</span>
+            <span class="dl-sub-title">Pre-Trained 13 Models, Olympic Dataset Telemetry, Leaderboard CSV & Quickstart Guide (.ZIP)</span>
+          </div>
+          <span class="dl-badge-chip">FREE • 1.2 MB</span>
+        </a>
+
+        <button class="btn-modal-export-json" id="modalQuickExportBtn">
+          <span>📊</span> Export Current Tactical JSON Report
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Persistent Floating Download Suite Widget -->
+  <button id="floatingDownloadBtn" class="floating-download-widget" title="Download Complete Tactical Suite">
+    <span class="floating-dl-icon">📥</span>
+    <span class="floating-dl-text">Download Suite (ZIP)</span>
+  </button>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+{
+  "version": 2,
+  "name": "volleyball-tactical-intelligence",
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "app/static/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/index.py"
+    },
+    {
+      "src": "/static/(.*)",
+      "dest": "app/static/$1"
+    },
+    {
+      "src": "/(index\\.html)?",
+      "dest": "app/static/index.html"
+    },
+    {
+      "src": "/style\\.css",
+      "dest": "app/static/style.css"
+    },
+    {
+      "src": "/app\\.js",
+      "dest": "app/static/app.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "app/static/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    }
+  ]
+}

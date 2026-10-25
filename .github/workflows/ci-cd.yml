@@ -1,0 +1,83 @@
+name: VolleyTactix CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  test-and-lint:
+    name: Build & Run Automated Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Syntax & Compilation Check
+        run: |
+          python -m py_compile app/main.py
+          python -m py_compile app/model_service.py
+          python -m py_compile api/index.py
+
+      - name: Run Test Suite
+        run: |
+          pytest tests/ -v --tb=short
+
+      - name: Validate Frontend Assets
+        run: |
+          test -f app/static/index.html || exit 1
+          test -f app/static/style.css || exit 1
+          test -f app/static/app.js || exit 1
+          echo "Frontend assets verified successfully."
+
+  deploy-vercel:
+    name: Deploy to Vercel
+    needs: test-and-lint
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to Vercel Action
+        uses: amondnet/vercel-action@v25
+        if: env.VERCEL_TOKEN != ''
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deployment Instructions Note
+        if: env.VERCEL_TOKEN == ''
+        run: |
+          echo "=========================================================="
+          echo "NOTE: Automatic Vercel deployment via GitHub Actions requires:"
+          echo "  - VERCEL_TOKEN"
+          echo "  - VERCEL_ORG_ID"
+          echo "  - VERCEL_PROJECT_ID"
+          echo "Add these in GitHub Repo -> Settings -> Secrets and variables -> Actions."
+          echo ""
+          echo "Alternatively, you can import this repository directly in"
+          echo "the Vercel Dashboard (https://vercel.com/new) for continuous"
+          echo "zero-config auto-deployments on every git push!"
+          echo "=========================================================="
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
