@@ -2171,11 +2171,21 @@ function initVanta(retries = 10) {
       scaleMobile: 1.0,
       color: isDark ? 0x38bdf8 : 0x0284c7,
       backgroundColor: isDark ? 0x090d16 : 0xf8fafc,
-      points: 12.0,
+      points: 13.0,
       maxDistance: 24.0,
-      spacing: 15.0,
+      spacing: 16.0,
       showDots: true
     });
+
+    // Window mousemove bridge: guarantees continuous 3D camera rotation and mesh interaction as cursor moves
+    window.addEventListener("mousemove", (e) => {
+      if (vantaEffect && typeof vantaEffect.onMouseMove === "function") {
+        const rect = el.getBoundingClientRect();
+        const normX = Math.max(0, Math.min(1, (e.clientX - rect.left) / (rect.width || window.innerWidth)));
+        const normY = Math.max(0, Math.min(1, (e.clientY - rect.top) / (rect.height || window.innerHeight)));
+        vantaEffect.onMouseMove(normX, normY);
+      }
+    }, { passive: true });
   } catch (err) {
     console.warn("Vanta.js Net skipped:", err);
   }
@@ -2192,7 +2202,7 @@ function updateVantaTheme(theme) {
 }
 
 // ---------------------------------------------------------------------------
-// DYNAMIC HERO TACTICAL CONSTELLATION & MESH ANIMATION
+// DYNAMIC HERO TACTICAL CONSTELLATION & MESH ANIMATION (INTERACTIVE TO CURSOR)
 // ---------------------------------------------------------------------------
 function initHeroConstellation() {
   const canvas = document.getElementById("heroConstellationCanvas");
@@ -2207,14 +2217,14 @@ function initHeroConstellation() {
   resize();
   window.addEventListener("resize", resize);
 
-  const numNodes = Math.min(80, Math.floor((canvas.width * canvas.height) / 11000));
+  const numNodes = Math.min(85, Math.floor((canvas.width * canvas.height) / 10500));
   const nodes = [];
   for (let i = 0; i < numNodes; i++) {
     nodes.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.65,
-      vy: (Math.random() - 0.5) * 0.65,
+      vx: (Math.random() - 0.5) * 0.7,
+      vy: (Math.random() - 0.5) * 0.7,
       radius: Math.random() * 2.2 + 1.2,
       baseRadius: Math.random() * 2.2 + 1.2,
       pulse: Math.random() * Math.PI * 2,
@@ -2222,18 +2232,29 @@ function initHeroConstellation() {
     });
   }
 
-  let mouse = { x: -9999, y: -9999, radius: 160 };
-  if (hero) {
-    hero.addEventListener("mousemove", (e) => {
-      const rect = canvas.getBoundingClientRect();
+  const mouse = { x: -9999, y: -9999, radius: 180, active: false };
+
+  window.addEventListener("mousemove", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    if (
+      e.clientX >= rect.left - 40 &&
+      e.clientX <= rect.right + 40 &&
+      e.clientY >= rect.top - 40 &&
+      e.clientY <= rect.bottom + 40
+    ) {
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
-    });
-    hero.addEventListener("mouseleave", () => {
-      mouse.x = -9999;
-      mouse.y = -9999;
-    });
-  }
+      mouse.active = true;
+    } else {
+      mouse.active = false;
+    }
+  }, { passive: true });
+
+  window.addEventListener("mouseleave", () => {
+    mouse.active = false;
+    mouse.x = -9999;
+    mouse.y = -9999;
+  });
 
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -2252,22 +2273,35 @@ function initHeroConstellation() {
       if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
       if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
 
-      // Magnetic mouse interaction
-      const dx = mouse.x - n.x;
-      const dy = mouse.y - n.y;
-      const dist = Math.hypot(dx, dy);
-      if (dist < mouse.radius) {
-        const force = (1 - dist / mouse.radius) * 2.2;
-        n.x -= (dx / dist) * force;
-        n.y -= (dy / dist) * force;
+      // Magnetic cursor interaction & dynamic connecting lines
+      if (mouse.active) {
+        const dx = mouse.x - n.x;
+        const dy = mouse.y - n.y;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < mouse.radius && dist > 1) {
+          // Dynamic connecting laser line to cursor
+          const cursorAlpha = (1 - dist / mouse.radius) * (isDark ? 0.75 : 0.55);
+          ctx.beginPath();
+          ctx.moveTo(n.x, n.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = `rgba(${lineColor}, ${cursorAlpha})`;
+          ctx.lineWidth = 1.3;
+          ctx.stroke();
+
+          // Smooth magnetic displacement
+          const force = (1 - dist / mouse.radius) * 2.8;
+          n.x -= (dx / dist) * force;
+          n.y -= (dy / dist) * force;
+        }
       }
 
-      // Draw tactical mesh connections
+      // Draw tactical mesh connections between nodes
       for (let j = i + 1; j < nodes.length; j++) {
         const n2 = nodes[j];
         const distNodes = Math.hypot(n.x - n2.x, n.y - n2.y);
-        if (distNodes < 120) {
-          const alpha = (1 - distNodes / 120) * (isDark ? 0.38 : 0.25);
+        if (distNodes < 125) {
+          const alpha = (1 - distNodes / 125) * (isDark ? 0.4 : 0.28);
           ctx.beginPath();
           ctx.moveTo(n.x, n.y);
           ctx.lineTo(n2.x, n2.y);
@@ -2293,91 +2327,29 @@ function initHeroConstellation() {
       }
     }
 
+    // Render glowing tactical reticle around active cursor
+    if (mouse.active && mouse.x > 0 && mouse.y > 0 && mouse.x < canvas.width && mouse.y < canvas.height) {
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y, 18, 0, Math.PI * 2);
+      ctx.strokeStyle = isDark ? "rgba(56, 189, 248, 0.45)" : "rgba(2, 132, 199, 0.4)";
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = isDark ? "#38bdf8" : "#0284c7";
+      ctx.fill();
+    }
+
     requestAnimationFrame(animate);
   }
   requestAnimationFrame(animate);
 }
 
-// ===========================================================================
-// REACT-BITS INTERACTIVE SUITE: SPOTLIGHT, MAGNET & DECRYPTED TEXT
-// ===========================================================================
-
-function initSpotlightCards() {
-  const cards = document.querySelectorAll(".spotlight-card, .glass-card, .model-card");
-  cards.forEach(card => {
-    card.addEventListener("mousemove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty("--spotlight-x", `${x}px`);
-      card.style.setProperty("--spotlight-y", `${y}px`);
-    });
-  });
-}
-
-function initMagneticButtons() {
-  if (typeof gsap === "undefined") return;
-  const btns = document.querySelectorAll(".magnetic-btn, .header-download-btn, .btn-hero-primary, .btn-hero-download, .nav-tab");
-  btns.forEach(btn => {
-    btn.addEventListener("mousemove", (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - (rect.left + rect.width / 2);
-      const y = e.clientY - (rect.top + rect.height / 2);
-      gsap.to(btn, {
-        x: x * 0.28,
-        y: y * 0.28,
-        duration: 0.2,
-        ease: "power2.out"
-      });
-    });
-
-    btn.addEventListener("mouseleave", () => {
-      gsap.to(btn, {
-        x: 0,
-        y: 0,
-        duration: 0.6,
-        ease: "elastic.out(1.2, 0.4)"
-      });
-    });
-  });
-}
-
-function initDecryptedText() {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789•✦#/%$";
-  const elements = document.querySelectorAll(".decrypted-text");
-
-  elements.forEach(el => {
-    const originalText = el.dataset.text || el.innerText;
-    let iteration = 0;
-    let interval = null;
-
-    function scramble() {
-      clearInterval(interval);
-      iteration = 0;
-      interval = setInterval(() => {
-        el.innerText = originalText
-          .split("")
-          .map((letter, index) => {
-            if (index < iteration) {
-              return originalText[index];
-            }
-            return chars[Math.floor(Math.random() * chars.length)];
-          })
-          .join("");
-
-        if (iteration >= originalText.length) {
-          clearInterval(interval);
-        }
-        iteration += 1.5;
-      }, 25);
-    }
-
-    scramble();
-    if (el.parentElement) {
-      el.parentElement.addEventListener("mouseenter", scramble);
-    }
-  });
-}
+// Stubs preserved for backwards compatibility
+function initSpotlightCards() {}
+function initMagneticButtons() {}
+function initDecryptedText() {}
 
 function initGSAPAnimations() {
   if (typeof gsap === "undefined") return;
@@ -2752,8 +2724,15 @@ function initAmbientOrbCanvas() {
     vx: (Math.random() - 0.5) * 0.35,
     vy: (Math.random() - 0.5) * 0.35,
     hue: [210, 240, 270, 200, 220, 260][i],
-    alpha: 0.06 + Math.random() * 0.08
+    alpha: 0.06 + Math.random() * 0.08,
+    depth: 0.025 + (i * 0.012)
   }));
+
+  const mouseOffset = { x: 0, y: 0 };
+  window.addEventListener("mousemove", (e) => {
+    mouseOffset.x = (e.clientX - window.innerWidth / 2);
+    mouseOffset.y = (e.clientY - window.innerHeight / 2);
+  }, { passive: true });
 
   function drawOrbs() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -2765,11 +2744,14 @@ function initAmbientOrbCanvas() {
       if (orb.y < -orb.r) orb.y = canvas.height + orb.r;
       if (orb.y > canvas.height + orb.r) orb.y = -orb.r;
 
-      const grad = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.r);
+      const px = orb.x + mouseOffset.x * orb.depth;
+      const py = orb.y + mouseOffset.y * orb.depth;
+
+      const grad = ctx.createRadialGradient(px, py, 0, px, py, orb.r);
       grad.addColorStop(0, `hsla(${orb.hue}, 80%, 60%, ${orb.alpha})`);
       grad.addColorStop(1, `hsla(${orb.hue}, 60%, 40%, 0)`);
       ctx.beginPath();
-      ctx.arc(orb.x, orb.y, orb.r, 0, Math.PI * 2);
+      ctx.arc(px, py, orb.r, 0, Math.PI * 2);
       ctx.fillStyle = grad;
       ctx.fill();
     });

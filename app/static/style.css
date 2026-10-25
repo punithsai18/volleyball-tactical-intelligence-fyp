@@ -395,7 +395,7 @@ html.lenis, html.lenis body {
 
 .hero-landing {
   position: relative;
-  min-height: 82vh;
+  min-height: 84vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -403,7 +403,7 @@ html.lenis, html.lenis body {
   padding: 4.5rem 1.5rem 5.5rem;
   overflow: hidden;
   border-bottom: 1px solid var(--border-glass);
-  background: radial-gradient(circle at 50% 30%, rgba(2, 132, 199, 0.08) 0%, transparent 70%);
+  background: transparent;
 }
 
 .vanta-canvas-bg {
@@ -413,7 +413,7 @@ html.lenis, html.lenis body {
   width: 100%;
   height: 100%;
   z-index: 1;
-  opacity: 0.85;
+  opacity: 0.92;
   pointer-events: none;
 }
 
@@ -423,94 +423,13 @@ html.lenis, html.lenis body {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
-}
-
-/* ==========================================================================
-   REACT-BITS INSPIRED VISUAL EFFECTS SUITE
-   ========================================================================== */
-
-/* 1. Aurora Background Mesh */
-.aurora-bg-mesh {
-  position: absolute;
-  top: -40%;
-  left: -40%;
-  width: 180%;
-  height: 180%;
-  background: radial-gradient(circle at 50% 50%, rgba(2, 132, 199, 0.16), transparent 50%),
-              radial-gradient(circle at 25% 65%, rgba(124, 58, 237, 0.14), transparent 45%),
-              radial-gradient(circle at 75% 35%, rgba(16, 185, 129, 0.12), transparent 45%),
-              radial-gradient(circle at 80% 75%, rgba(245, 158, 11, 0.09), transparent 45%);
-  filter: blur(55px);
-  animation: auroraMorph 16s ease-in-out infinite alternate;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.85;
-}
-
-@keyframes auroraMorph {
-  0% { transform: rotate(0deg) scale(1) translate(0, 0); }
-  50% { transform: rotate(180deg) scale(1.15) translate(30px, -20px); }
-  100% { transform: rotate(360deg) scale(1) translate(-20px, 15px); }
-}
-
-/* 2. Shiny / Shimmer Text Effect */
-.shiny-text {
-  position: relative;
-  display: inline-block;
-  background: linear-gradient(
-    110deg,
-    var(--text-primary) 0%,
-    var(--text-primary) 40%,
-    #38bdf8 50%,
-    var(--text-primary) 60%,
-    var(--text-primary) 100%
-  );
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shinyShimmer 6s ease-in-out infinite;
-}
-
-@keyframes shinyShimmer {
-  0% { background-position: 120% 0; }
-  100% { background-position: -120% 0; }
-}
-
-/* 3. Spotlight Cards Glow */
-.spotlight-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.spotlight-card::after {
-  content: '';
-  position: absolute;
-  top: var(--spotlight-y, -1000px);
-  left: var(--spotlight-x, -1000px);
-  width: 320px;
-  height: 320px;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 65%);
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  z-index: 10;
-}
-
-.spotlight-card:hover::after {
-  opacity: 1;
-}
-
-/* 4. Magnetic Interactive Elements */
-.magnetic-btn {
-  will-change: transform;
 }
 
 .hero-content {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   max-width: 1060px;
   text-align: center;
   margin: 0 auto;
@@ -1746,14 +1665,29 @@ html.lenis, html.lenis body {
 @media (max-width: 1024px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
   
   .app-header {
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 1.25rem;
   }
   
   .main-container {
-    padding: 0 1rem 2.5rem;
+    padding: 0 1.25rem 3rem;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .hero-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .video-analysis-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1762,51 +1696,135 @@ html.lenis, html.lenis body {
   .app-header {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.75rem;
-    padding: 0.75rem;
+    gap: 0.85rem;
+    padding: 0.85rem;
   }
 
   .header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     justify-content: space-between;
     width: 100%;
+    gap: 0.5rem;
+  }
+
+  .header-download-btn {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.82rem;
+  }
+
+  .model-selector-wrapper {
+    flex: 1 1 100%;
+    justify-content: space-between;
   }
 
   .model-select {
-    max-width: 150px;
+    flex: 1;
+    max-width: none;
+    font-size: 0.78rem;
+  }
+
+  .hero-landing {
+    padding: 3rem 1rem 3.5rem;
+    min-height: auto;
+  }
+
+  .hero-title {
+    font-size: clamp(1.85rem, 6.5vw, 2.5rem);
+    line-height: 1.2;
+    margin-bottom: 0.85rem;
+  }
+
+  .hero-subtitle {
+    font-size: 0.96rem;
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    max-width: 440px;
+    gap: 0.65rem;
+    margin-bottom: 2rem;
+  }
+
+  .btn-hero-primary,
+  .btn-hero-secondary,
+  .btn-hero-download {
+    width: 100%;
+    justify-content: center;
+    padding: 0.85rem 1.25rem;
+    font-size: 0.94rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  .hero-stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  .hero-stat-card {
+    padding: 1rem 0.75rem;
+  }
+
+  .hero-stat-number {
+    font-size: 1.7rem;
+  }
+
+  .hero-stat-label {
+    font-size: 0.72rem;
   }
 
   .nav-tabs {
-    padding: 0.25rem 0.75rem 0;
+    padding: 0.25rem 0.5rem 0;
+    gap: 0.25rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
   }
 
   .nav-tab {
+    flex-shrink: 0;
     padding: 0.6rem 0.85rem;
     font-size: 0.82rem;
+    white-space: nowrap;
   }
 
   .card-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.75rem;
   }
 
   .telemetry-grid {
     grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
   }
 
   .kpi-ticker-ribbon {
     grid-template-columns: 1fr 1fr;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.75rem;
     gap: 0.5rem;
   }
 
   .layer-toggle-strip {
     width: 100%;
+    flex-wrap: wrap;
     margin-top: 0.5rem;
   }
 
   .playback-controls {
     flex-direction: column;
     align-items: stretch;
+    gap: 0.65rem;
   }
 
   .timeline-slider {
@@ -1816,6 +1834,7 @@ html.lenis, html.lenis body {
   .verdict-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.4rem;
   }
 
   .confidence-box {
@@ -1826,12 +1845,53 @@ html.lenis, html.lenis body {
   .models-grid {
     grid-template-columns: 1fr;
   }
+
+  .court-container {
+    padding: 0.5rem;
+  }
+
+  .modal-content {
+    width: 95vw;
+    max-height: 92vh;
+    padding: 1.25rem;
+  }
+
+  .upload-dropzone {
+    padding: 2rem 1rem;
+  }
 }
 
 /* Small Phones (<= 480px) */
 @media (max-width: 480px) {
   .brand-text h1 {
-    font-size: 1.15rem;
+    font-size: 1.12rem;
+  }
+
+  .brand-text p {
+    font-size: 0.65rem;
+  }
+
+  .brand-logo {
+    width: 36px;
+    height: 36px;
+    font-size: 1.25rem;
+  }
+
+  .hero-stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .hero-stat-card {
+    padding: 0.85rem 0.4rem;
+  }
+
+  .hero-stat-number {
+    font-size: 1.45rem;
+  }
+
+  .hero-stat-label {
+    font-size: 0.68rem;
   }
 
   .kpi-ticker-ribbon {
@@ -1840,56 +1900,20 @@ html.lenis, html.lenis body {
   }
 
   .glass-card {
-    padding: 0.9rem;
+    padding: 0.85rem;
   }
 
   .telemetry-grid {
     grid-template-columns: 1fr;
   }
-}
 
-/* Mobile Media Queries for Hero & Features */
-@media (max-width: 1024px) {
-  .features-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .header-actions {
+    gap: 0.35rem;
   }
 
-  .hero-stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-landing {
-    padding: 3rem 1rem 4rem;
-    min-height: auto;
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    width: 100%;
-    gap: 0.75rem;
-  }
-
-  .btn-hero-primary,
-  .btn-hero-secondary {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-stats-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-stats-grid {
-    grid-template-columns: 1fr;
+  .theme-toggle-btn, .nav-overview-btn {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.75rem;
   }
 }
 
