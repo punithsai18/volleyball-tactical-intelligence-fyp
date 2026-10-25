@@ -2,14 +2,6 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/static/(.*)",
-      "destination": "/app/static/$1"
-    },
-    {
       "source": "/style.css",
       "destination": "/app/static/style.css"
     },
@@ -20,6 +12,10 @@
     {
       "source": "/gallery/(.*)",
       "destination": "/app/static/gallery/$1"
+    },
+    {
+      "source": "/static/(.*)",
+      "destination": "/app/static/$1"
     },
     {
       "source": "/",

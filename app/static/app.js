@@ -4,10 +4,18 @@
 
 // Render Backend Integration
 const RENDER_BACKEND_KEY = "VOLLEYTACTIX_RENDER_BACKEND";
+const DEFAULT_RENDER_BACKEND = "https://volleyball-tactical-intelligence-backend.onrender.com";
+
 function getApiBaseUrl() {
   const customUrl = localStorage.getItem(RENDER_BACKEND_KEY);
   if (customUrl) return customUrl.replace(/\/$/, "");
   if (window.RENDER_BACKEND_URL) return window.RENDER_BACKEND_URL.replace(/\/$/, "");
+  // When running live on Vercel or public domain, auto-connect to Render backend
+  if (typeof window !== "undefined" && window.location && window.location.hostname) {
+    if (!["localhost", "127.0.0.1"].includes(window.location.hostname)) {
+      return DEFAULT_RENDER_BACKEND;
+    }
+  }
   return "";
 }
 

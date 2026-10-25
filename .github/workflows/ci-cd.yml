@@ -31,7 +31,6 @@ jobs:
         run: |
           python -m py_compile app/main.py
           python -m py_compile app/model_service.py
-          python -m py_compile api/index.py
 
       - name: Run Test Suite
         run: |
