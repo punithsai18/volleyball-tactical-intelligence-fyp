@@ -20,6 +20,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy only the REQUIRED application frontend and backend files
 COPY app/ /app/app/
+COPY fyp/ /app/fyp/
 COPY ALL_13_MODELS/ML_models/ /app/ALL_13_MODELS/ML_models/
 COPY tactical_ml_v4.joblib /app/tactical_ml_v4.joblib
 COPY main.py /app/main.py
