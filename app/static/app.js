@@ -2369,7 +2369,7 @@ function initGSAPAnimations() {
     // 2. Animated Number Counters
     setTimeout(() => {
       animateNumberCounter("#heroStatModels", 13, 1.4, "", "");
-      animateNumberCounter("#heroStatClips", 945, 1.8, "", "");
+      animateNumberCounter("#heroStatClips", 948, 1.8, "", "");
       animateNumberCounter("#heroStatLatency", 18, 1.4, "< ", "ms");
       animateNumberCounter("#heroStatAgreement", 83.8, 1.6, "", "%", 1);
     }, 600);

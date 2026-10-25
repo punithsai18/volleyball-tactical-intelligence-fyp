@@ -127,18 +127,9 @@
         <button class="btn-hero-secondary" id="heroDocsBtn">
           <span>📖</span> Project & FYP Portal
         </button>
-        <button class="btn-hero-secondary" id="heroVideoBtn">
-          <span>📹</span> Upload & Analyze Video
-        </button>
-        <button class="btn-hero-secondary" id="heroConsensusBtn">
-          <span>📊</span> 13-Model Consensus
-        </button>
         <a href="https://github.com/punithsai18/volleyball-tactical-intelligence-fyp" target="_blank" rel="noopener noreferrer" class="btn-hero-secondary" style="text-decoration: none; color: inherit;">
           <span>🐙</span> GitHub Repo
         </a>
-        <button class="btn-hero-secondary" id="heroSandboxBtn" style="display:none;">
-          <span>🧪</span> Formation Sandbox
-        </button>
       </div>
 
       <!-- Live Animated Counter Stats Grid -->
@@ -148,7 +139,7 @@
           <div class="hero-stat-label">AI Classifiers (ML + DL)</div>
         </div>
         <div class="hero-stat-card">
-          <div class="hero-stat-number" id="heroStatClips">945</div>
+          <div class="hero-stat-number" id="heroStatClips">948</div>
           <div class="hero-stat-label">Olympic Ground-Truth Clips</div>
         </div>
         <div class="hero-stat-card">
@@ -705,7 +696,7 @@
         <div class="card-header">
           <div>
             <h2 class="card-title"><span>📊</span> Leave-One-Video-Out (LOVO) Cross-Match Benchmark</h2>
-            <div class="card-subtitle">Evaluated strictly on held-out match video (945 hand-annotated rally clips)</div>
+            <div class="card-subtitle">Evaluated strictly on held-out match video (948 hand-annotated rally clips across 11 broadcast matches)</div>
           </div>
         </div>
 
@@ -933,20 +924,79 @@
 
         <div class="doc-meta-strip">
           <div class="doc-meta-item">
-            <span class="doc-meta-label">Dataset:</span>
-            <span class="doc-meta-val">Paris 2024 Olympics (Japan vs Argentina)</span>
+            <span class="doc-meta-label">Total Dataset:</span>
+            <span class="doc-meta-val">948 Labelled Tactical Clips (11 Broadcast Matches)</span>
           </div>
           <div class="doc-meta-item">
-            <span class="doc-meta-label">Models:</span>
-            <span class="doc-meta-val">13 Classifiers (9 ML + 4 DL)</span>
+            <span class="doc-meta-label">Models Benchmarked:</span>
+            <span class="doc-meta-val">16 Classifiers (12 Classical ML + 4 Deep Sequence)</span>
           </div>
           <div class="doc-meta-item">
-            <span class="doc-meta-label">Benchmark:</span>
-            <span class="doc-meta-val">Leave-One-Video-Out (LOVO) Cross-Validation</span>
+            <span class="doc-meta-label">Deployed Champion:</span>
+            <span class="doc-meta-val">HistGradientBoosting (67.0% LOVO Acc • 0.51 Macro F1)</span>
           </div>
           <div class="doc-meta-item">
-            <span class="doc-meta-label">License:</span>
-            <span class="doc-meta-val">MIT Open Source</span>
+            <span class="doc-meta-label">Action Vocabulary:</span>
+            <span class="doc-meta-val">8 Timestamped Actions (Serve, Spike, Block, Dig, etc.)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DATASET CLASS DISTRIBUTION STRIP -->
+      <div class="glass-card doc-section" style="margin-top: 1.5rem; padding: 1.5rem 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+          <div>
+            <span class="doc-badge-pill">DATASET • 948 CLIPS</span>
+            <h3 style="margin: 0.35rem 0 0; font-size: 1.3rem;">Training & Evaluation Distribution by Tactic Class</h3>
+          </div>
+          <div style="font-size: 0.9rem; color: var(--text-secondary); background: rgba(255,255,255,0.06); padding: 0.4rem 0.8rem; border-radius: 8px;">
+            Leave-One-Video-Out (LOVO) Cross-Validation across 11 Matches
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+          <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 12px; padding: 1rem 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-weight: 600; color: #ef4444;">Coordinated Attack</span>
+              <span style="font-weight: 700; font-size: 1.15rem; color: #ef4444;">370 clips</span>
+            </div>
+            <div style="height: 6px; width: 100%; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; margin-bottom: 0.4rem;">
+              <div style="height: 100%; width: 39.0%; background: #ef4444; border-radius: 3px;"></div>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-secondary);">39.0% of dataset • Net spike & quick set transitions</div>
+          </div>
+
+          <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 12px; padding: 1rem 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-weight: 600; color: #10b981;">Coordinated Defense</span>
+              <span style="font-weight: 700; font-size: 1.15rem; color: #10b981;">355 clips</span>
+            </div>
+            <div style="height: 6px; width: 100%; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; margin-bottom: 0.4rem;">
+              <div style="height: 100%; width: 37.4%; background: #10b981; border-radius: 3px;"></div>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-secondary);">37.4% of dataset • Double block & backcourt perimeter dig</div>
+          </div>
+
+          <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 12px; padding: 1rem 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-weight: 600; color: #f59e0b;">Spacing Breakdown</span>
+              <span style="font-weight: 700; font-size: 1.15rem; color: #f59e0b;">115 clips</span>
+            </div>
+            <div style="height: 6px; width: 100%; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; margin-bottom: 0.4rem;">
+              <div style="height: 100%; width: 12.1%; background: #f59e0b; border-radius: 3px;"></div>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-secondary);">12.1% (minority class) • Overlap or court boundary seam</div>
+          </div>
+
+          <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 12px; padding: 1rem 1.25rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <span style="font-weight: 600; color: #38bdf8;">Delayed Support</span>
+              <span style="font-weight: 700; font-size: 1.15rem; color: #38bdf8;">108 clips</span>
+            </div>
+            <div style="height: 6px; width: 100%; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; margin-bottom: 0.4rem;">
+              <div style="height: 100%; width: 11.4%; background: #38bdf8; border-radius: 3px;"></div>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-secondary);">11.4% (minority class) • Recovery delay after block touch</div>
           </div>
         </div>
       </div>
@@ -964,7 +1014,7 @@
             <div class="doc-card-icon" style="background: rgba(37, 99, 235, 0.15); color: var(--accent-blue);">🎯</div>
             <h3 class="doc-card-title">Autonomous Tactical Recognition</h3>
             <p class="doc-card-text">
-              Eliminate manual video tagging by automatically classifying high-level collective team tactics (Coordinated Attack, Quick Attack, Split Attack, Coordinated Defense, Delayed Support, Spacing Breakdown) from broadcast video streams.
+              Eliminate manual video tagging by automatically classifying high-level collective team tactics across 948 labelled clips from 11 broadcast matches using 29-frame sliding windows without sensors.
             </p>
           </div>
 
@@ -972,15 +1022,15 @@
             <div class="doc-card-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--defense-color);">🤖</div>
             <h3 class="doc-card-title">Markerless Multi-Object Vision</h3>
             <p class="doc-card-text">
-              Deploy a dual-detector architecture using YOLOv11-Pose to extract 17 anatomical keypoints per athlete simultaneously with a specialized ball tracking detector without wearable tags or multi-camera setups.
+              Deploy YOLO11m-pose with BoT-SORT tracking to extract 17 keypoints per player alongside a fine-tuned detector (volleyball_best.pt) finding the ball at 1280 px with median court homography.
             </p>
           </div>
 
           <div class="doc-card">
             <div class="doc-card-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--attack-color);">🧠</div>
-            <h3 class="doc-card-title">13-Model Sequence Benchmarking</h3>
+            <h3 class="doc-card-title">16-Model Benchmarking</h3>
             <p class="doc-card-text">
-              Provide a rigorous, empirical benchmark comparing 9 Machine Learning (HistGradientBoosting, ExtraTrees, SVM, etc.) and 4 Deep Learning sequence models (InceptionTime, TCN, BiLSTM, Mamba SSM) under strict Leave-One-Video-Out (LOVO) cross-validation.
+              Provide an honest empirical benchmark comparing 12 Machine Learning models and 4 Deep Learning sequence models (InceptionTime, TCN, BiLSTM, Mamba SSM) under leave-one-video-out cross-validation.
             </p>
           </div>
 
@@ -988,7 +1038,7 @@
             <div class="doc-card-icon" style="background: rgba(124, 58, 237, 0.15); color: var(--spacing-color);">⚡</div>
             <h3 class="doc-card-title">Real-Time Invariant Geometry</h3>
             <p class="doc-card-text">
-              Formulate an 18-dimensional invariant spatial representation (Minimum Spanning Tree graph, Convex Hull territorial envelope, team centroid velocity, dispersion variance) achieving inference latency below 18ms.
+              Formulate identity-stable slots and scale-invariant descriptors (Minimum Spanning Tree, Convex Hull, centroid velocity, dispersion variance) achieving real-time inference latency under 18ms.
             </p>
           </div>
         </div>
@@ -1248,47 +1298,56 @@
         <div class="doc-section-header">
           <span class="doc-badge-pill">05 • DEMONSTRATION</span>
           <h2 class="doc-title">Demonstration Videos & Interactive Clips</h2>
-          <p class="doc-subtitle">Live interactive tactical demonstrations generated directly from the Olympic benchmark dataset</p>
+          <p class="doc-subtitle">Verified video demonstrations and tactical pipeline outputs from the project repository</p>
         </div>
 
         <div class="doc-grid-3">
           <!-- Demo 1 -->
           <div class="doc-card demo-video-card">
             <div class="demo-card-header">
-              <span class="badge" style="background: rgba(245, 158, 11, 0.2); color: var(--attack-color);">TACTIC DEMO 1</span>
-              <h4>Quick Attack Net Sequence</h4>
+              <span class="badge" style="background: rgba(37, 99, 235, 0.2); color: var(--accent-blue);">UI WALKTHROUGH</span>
+              <h4>End-to-End Analysis Workflow</h4>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
-              Setter delivers high-tempo ball to middle blocker executing rapid first-tempo strike inside the 3-meter zone.
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+              Full screen recording of the web interface in use: upload a 25-second match clip, follow live GPU analysis stages, then inspect the multi-quality annotated MP4, tactical reports, and court calibration.
             </p>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem;">
+              <strong>Source:</strong> <code>ui_walkthrough.mp4</code> • RTX 3050 Laptop GPU
+            </div>
             <button class="btn btn-primary" style="width: 100%;" onclick="document.getElementById('navVideoBtn').click(); setTimeout(() => document.getElementById('trySampleVideoBtn').click(), 200);">
-              <span>▶</span> Open in Video Analyzer
+              <span>▶</span> Open Video Analyzer
             </button>
           </div>
 
           <!-- Demo 2 -->
           <div class="doc-card demo-video-card">
             <div class="demo-card-header">
-              <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: var(--defense-color);">TACTIC DEMO 2</span>
-              <h4>Coordinated Backcourt Dig</h4>
+              <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: var(--defense-color);">SYSTEM OUTPUT</span>
+              <h4>Team Tactics + Opponent Actions</h4>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
-              Three-player defensive perimeter shift with libero covering cross-court angle and deep blockers closing the seam.
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+              Produced by the pipeline from a 25-second upload: near-team tactics (convex hull, relation graph, class probabilities) and isolated opponent serves, spikes, and blocks with timestamps.
             </p>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem;">
+              <strong>Source:</strong> <code>annotated_ultra.mp4</code> (720p / 480p / 360p)
+            </div>
             <button class="btn btn-secondary" style="width: 100%;" onclick="document.getElementById('navRadarBtn').click();">
-              <span>🎯</span> Open in Tactical Radar
+              <span>🎯</span> Open Tactical Radar
             </button>
           </div>
 
           <!-- Demo 3 -->
           <div class="doc-card demo-video-card">
             <div class="demo-card-header">
-              <span class="badge" style="background: rgba(37, 99, 235, 0.2); color: var(--accent-blue);">TACTIC DEMO 3</span>
-              <h4>Olympic Stream Match Replay</h4>
+              <span class="badge" style="background: rgba(245, 158, 11, 0.2); color: var(--attack-color);">BI-CAUSAL VIEW</span>
+              <h4>Relations & Interactions (R + I)</h4>
             </div>
-            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
-              Full 5-minute continuous timeline from Japan vs Argentina with 309 tactical inference windows and live consensus.
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+              Team relation graphs (R), player-ball interaction (I), 6-slot metric court formations, and timestamped actions accompanied by the t1–t2–t3 causal tactical panel.
             </p>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem;">
+              <strong>Source:</strong> <code>videoplayback(1)_15min_bicausal_annotated.mp4</code>
+            </div>
             <button class="btn btn-secondary" style="width: 100%;" onclick="document.getElementById('navMatchBtn').click();">
               <span>🏐</span> Open Match Replay
             </button>
@@ -1301,7 +1360,7 @@
         <div class="doc-section-header">
           <span class="doc-badge-pill">06 • MILESTONES</span>
           <h2 class="doc-title">Project Progress & Engineering Roadmap</h2>
-          <p class="doc-subtitle">Structured Final Year Project development lifecycle from concept to cloud deployment</p>
+          <p class="doc-subtitle">Chronological research & engineering lifecycle of the Volleyball Tactical Intelligence FYP</p>
         </div>
 
         <div class="timeline-container">
@@ -1309,12 +1368,12 @@
           <div class="timeline-item">
             <div class="timeline-marker done">✓</div>
             <div class="timeline-content">
-              <div class="timeline-date">Phase 1 • Research & Dataset Curation</div>
-              <h4 class="timeline-title">FIVB Tactical Taxonomy & Ground-Truth Annotation</h4>
+              <div class="timeline-date">Phase 1 • Data Collection</div>
+              <h4 class="timeline-title">Problem Definition & Broadcast Footage Collection</h4>
               <p class="timeline-desc">
-                Defined 6 canonical tactical classes. Curated broadcast footage from the Paris 2024 Olympic Games (Japan vs Argentina). Segmented 945 tactical clips and generated ground-truth spatial annotations.
+                11 broadcast match videos collected across Olympic and international tournaments. Tactical classes and rigorous frame-by-frame labelling protocol formally defined.
               </p>
-              <span class="timeline-badge done-badge">100% Completed</span>
+              <span class="timeline-badge done-badge">Completed</span>
             </div>
           </div>
 
@@ -1322,12 +1381,12 @@
           <div class="timeline-item">
             <div class="timeline-marker done">✓</div>
             <div class="timeline-content">
-              <div class="timeline-date">Phase 2 • Computer Vision Pipeline</div>
-              <h4 class="timeline-title">Dual YOLOv11 Pose & Ball Tracking Architecture</h4>
+              <div class="timeline-date">Phase 2 • Detection & Tracking</div>
+              <h4 class="timeline-title">Dual Detector Baseline & Court Homography</h4>
               <p class="timeline-desc">
-                Implemented multi-athlete pose estimation using YOLOv11-Pose (17 skeletal joints) coupled with specialized high-speed volleyball detector. Integrated 4-point homography court normalization.
+                Dual detector architecture (stock YOLO for players, volleyball fine-tune for ball), court mask suppression, BoT-SORT / ByteTrack tracking, and jersey-color team clustering.
               </p>
-              <span class="timeline-badge done-badge">100% Completed</span>
+              <span class="timeline-badge done-badge">Completed</span>
             </div>
           </div>
 
@@ -1335,12 +1394,12 @@
           <div class="timeline-item">
             <div class="timeline-marker done">✓</div>
             <div class="timeline-content">
-              <div class="timeline-date">Phase 3 • Feature Engineering & Sequence Models</div>
-              <h4 class="timeline-title">18-Dimensional Invariant Geometry & 13 Models Training</h4>
+              <div class="timeline-date">Sep 6, 2026 • Pipeline Hardening</div>
+              <h4 class="timeline-title">Audit, Pipeline Fixes & Feature Redesign</h4>
               <p class="timeline-desc">
-                Engineered spatial telemetry features: Minimum Spanning Tree graph, Convex Hull envelope, centroid velocity, and dispersion variance. Trained 9 Machine Learning and 4 Deep Learning sequence models.
+                Full pipeline audit: identity-stable slots, NaN-safe spatial features, scale-invariant <code>perm_invariant_v2</code> descriptor, comprehensive 191-test validation suite, and automated <code>reproduce.py</code> runner.
               </p>
-              <span class="timeline-badge done-badge">100% Completed</span>
+              <span class="timeline-badge done-badge">Completed</span>
             </div>
           </div>
 
@@ -1348,12 +1407,12 @@
           <div class="timeline-item">
             <div class="timeline-marker done">✓</div>
             <div class="timeline-content">
-              <div class="timeline-date">Phase 4 • Rigorous Validation</div>
-              <h4 class="timeline-title">Leave-One-Video-Out (LOVO) Cross-Validation Benchmark</h4>
+              <div class="timeline-date">Sep 29, 2026 • Benchmarking</div>
+              <h4 class="timeline-title">13-Model Benchmark & Leave-One-Video-Out (LOVO)</h4>
               <p class="timeline-desc">
-                Benchmarked all 13 classifiers on unseen Olympic match rallies. HistGradientBoosting ranked #1 with 66.8% Macro-F1; InceptionTime achieved 64.9% as top Deep Learning sequence classifier.
+                9 classical ML + 4 deep temporal models (InceptionTime, TCN, BiLSTM, Mamba SSM) trained and compared under LOVO validation; evaluated multiclass tactical coordination and binary attack/defense variants.
               </p>
-              <span class="timeline-badge done-badge">100% Completed</span>
+              <span class="timeline-badge done-badge">Completed</span>
             </div>
           </div>
 
@@ -1361,96 +1420,159 @@
           <div class="timeline-item">
             <div class="timeline-marker done">✓</div>
             <div class="timeline-content">
-              <div class="timeline-date">Phase 5 • Full-Stack Platform & Cloud Deployment</div>
-              <h4 class="timeline-title">Interactive Web App, 3D Vanta UI & Vercel/Render CI/CD</h4>
+              <div class="timeline-date">Oct 3, 2026 • Calibration & Action Extraction</div>
+              <h4 class="timeline-title">Court Calibration, Bi-Causal View & 8 Actions</h4>
               <p class="timeline-desc">
-                Built responsive single-page web portal with Lenis smooth scroll, Vanta.js 3D mesh, interactive chalkboard formation sandbox, and decoupled deployment on Vercel (Frontend) and Render (ML Backend).
+                Automatic court-line detection on base frames, ball re-detection, rule-based action labelling (Serve, Spike, Block, Dig, Set, etc.), and Bi-Causal relation + interaction annotated video generation.
               </p>
-              <span class="timeline-badge done-badge">100% Completed</span>
+              <span class="timeline-badge done-badge">Completed</span>
             </div>
           </div>
 
           <!-- Item 6 -->
           <div class="timeline-item">
+            <div class="timeline-marker done">✓</div>
+            <div class="timeline-content">
+              <div class="timeline-date">Oct 21, 2026 • v6 Retrain on 948 Clips</div>
+              <h4 class="timeline-title">Full Re-Extraction & HistGradientBoosting Deployment</h4>
+              <p class="timeline-desc">
+                Full re-extraction and retraining on <strong>948 hand-labelled clips</strong> (370 Attack, 355 Defense, 115 Spacing Breakdown, 108 Delayed Support); HistGradientBoosting deployed as winner with <strong>67.0% LOVO accuracy</strong> and <strong>0.51 macro F1</strong>.
+              </p>
+              <span class="timeline-badge done-badge">Completed</span>
+            </div>
+          </div>
+
+          <!-- Item 7 -->
+          <div class="timeline-item">
+            <div class="timeline-marker done">✓</div>
+            <div class="timeline-content">
+              <div class="timeline-date">Oct 24, 2026 • Cloud Platform</div>
+              <h4 class="timeline-title">Web Application & Documentation Portal</h4>
+              <p class="timeline-desc">
+                Full-stack web application: 500 MB video upload, background processing pipeline, multi-quality annotated MP4 export, timestamped tactical and opponent reports (TXT, CSV, JSON), desktop app, and cloud deployment.
+              </p>
+              <span class="timeline-badge done-badge">Completed</span>
+            </div>
+          </div>
+
+          <!-- Item 8 -->
+          <div class="timeline-item">
             <div class="timeline-marker future">🚀</div>
             <div class="timeline-content">
-              <div class="timeline-date">Phase 6 • Future Enhancements</div>
-              <h4 class="timeline-title">Multi-Camera 3D Triangulation & Edge RTSP Streaming</h4>
+              <div class="timeline-date">Active • Ongoing Research</div>
+              <h4 class="timeline-title">More Matches & Minority Class Expansion</h4>
               <p class="timeline-desc">
-                Expand to multi-angle stadium feeds, automated FIVB referee challenge replay assist, and edge camera processing on NVIDIA Jetson embedded hardware for live sideline coaching tablets.
+                Expanding Delayed Support and Spacing Breakdown (minority classes) and incorporating multi-angle stadium court calibration to further improve domain generalisation.
               </p>
-              <span class="timeline-badge future-badge">Future Roadmap</span>
+              <span class="timeline-badge future-badge">In Progress</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- 7. TEAM DETAILS -->
+      <!-- 7. TEAM DETAILS (GROUP 56) -->
       <div class="glass-card doc-section" id="doc-team">
         <div class="doc-section-header">
           <span class="doc-badge-pill">07 • CONTRIBUTORS</span>
-          <h2 class="doc-title">Project Team Details</h2>
-          <p class="doc-subtitle">Researchers, advisors, and domain experts behind the VolleyTactix AI Project</p>
+          <h2 class="doc-title">Project Team Details — Group 56</h2>
+          <p class="doc-subtitle">Department of Computer Science and Engineering • Final Year Capstone Project</p>
         </div>
 
-        <div class="doc-grid-4">
+        <!-- Academic Supervision Banner -->
+        <div style="background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(30, 58, 138, 0.2)); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 14px; padding: 1.25rem 1.75rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-blue), #1e3a8a); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 700; box-shadow: 0 4px 12px rgba(37,99,235,0.3);">
+              DS
+            </div>
+            <div>
+              <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-blue); font-weight: 600;">Faculty Project Guide</div>
+              <h3 style="margin: 0.2rem 0; font-size: 1.25rem; color: var(--text-primary);">Dr. Divya Singh</h3>
+              <div style="font-size: 0.85rem; color: var(--text-secondary);">Assistant Professor, Department of Computer Science and Engineering</div>
+            </div>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.08); padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1);">
+            🎓 Academic Mentor
+          </div>
+        </div>
+
+        <!-- Group 56 Students Grid -->
+        <div style="margin-bottom: 0.75rem; font-size: 0.95rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">
+          Student Researchers (Group 56)
+        </div>
+
+        <div class="doc-grid-4" style="grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));">
           <!-- Member 1 -->
           <div class="team-card">
-            <div class="team-avatar">👨‍💻</div>
-            <h3 class="team-name">Project Lead & Developer</h3>
-            <div class="team-role">Final Year Student • CSE</div>
-            <p class="team-bio">
-              Led computer vision pipeline, YOLOv11 tracking integration, 13 ML/DL model training, full-stack architecture, and cloud deployment.
+            <div class="team-avatar" style="background: rgba(37, 99, 235, 0.15); color: var(--accent-blue);">👨‍💻</div>
+            <h3 class="team-name" style="font-size: 1.05rem;">Keshavramprakash D</h3>
+            <div class="team-role" style="color: var(--accent-blue); font-weight: 600; font-family: monospace;">CB.SC.U4CSE23425</div>
+            <p class="team-bio" style="font-size: 0.82rem;">
+              Computer Vision tracking, YOLO11m-pose keypoint pipelines, and BoT-SORT identity slot allocation.
             </p>
             <div class="team-skills">
-              <span>Computer Vision</span>
-              <span>Deep Learning</span>
-              <span>FastAPI</span>
+              <span>YOLO11 Pose</span>
+              <span>BoT-SORT</span>
+              <span>Vision</span>
             </div>
           </div>
 
           <!-- Member 2 -->
           <div class="team-card">
-            <div class="team-avatar">👨‍🏫</div>
-            <h3 class="team-name">Faculty Project Supervisor</h3>
-            <div class="team-role">Professor / Advisor</div>
-            <p class="team-bio">
-              Provided academic mentorship, research methodology supervision, statistical benchmarking validation, and manuscript review.
+            <div class="team-avatar" style="background: rgba(16, 185, 129, 0.15); color: var(--defense-color);">👨‍💻</div>
+            <h3 class="team-name" style="font-size: 1.05rem;">K. Surya Sekhar</h3>
+            <div class="team-role" style="color: var(--defense-color); font-weight: 600; font-family: monospace;">CB.SC.U4CSE23420</div>
+            <p class="team-bio" style="font-size: 0.82rem;">
+              Homography court calibration, metric spatial projection, and 18-dim invariant geometric feature extraction.
             </p>
             <div class="team-skills">
-              <span>Machine Learning</span>
-              <span>Sports Analytics</span>
-              <span>Research</span>
+              <span>Homography</span>
+              <span>Geometry</span>
+              <span>MST / Hull</span>
             </div>
           </div>
 
           <!-- Member 3 -->
           <div class="team-card">
-            <div class="team-avatar">🏐</div>
-            <h3 class="team-name">Domain Tactical Advisor</h3>
-            <div class="team-role">FIVB Tactical Analyst</div>
-            <p class="team-bio">
-              Verified volleyball rotation rules, advised on offensive/defensive tactical classes, and audited Olympic ground-truth accuracy.
+            <div class="team-avatar" style="background: rgba(245, 158, 11, 0.15); color: var(--attack-color);">👨‍💻</div>
+            <h3 class="team-name" style="font-size: 1.05rem;">G. Bharath Chandra</h3>
+            <div class="team-role" style="color: var(--attack-color); font-weight: 600; font-family: monospace;">CB.SC.U4CSE23415</div>
+            <p class="team-bio" style="font-size: 0.82rem;">
+              Ball trajectory smoothing, touch event detection, and 8-class rule-based volleyball action labelling.
             </p>
             <div class="team-skills">
-              <span>FIVB Strategy</span>
-              <span>Match Tagging</span>
-              <span>Coaching</span>
+              <span>Ball Detection</span>
+              <span>Touch Events</span>
+              <span>Action Order</span>
             </div>
           </div>
 
           <!-- Member 4 -->
           <div class="team-card">
-            <div class="team-avatar">🏛️</div>
-            <h3 class="team-name">Academic Department</h3>
-            <div class="team-role">Dept of Computer Science & Eng</div>
-            <p class="team-bio">
-              Final Year Project (FYP) / Capstone Project 2024–2026. Designed for open research, reproducible benchmarks, and community impact.
+            <div class="team-avatar" style="background: rgba(124, 58, 237, 0.15); color: var(--spacing-color);">👨‍💻</div>
+            <h3 class="team-name" style="font-size: 1.05rem;">V. Punith Sai</h3>
+            <div class="team-role" style="color: var(--spacing-color); font-weight: 600; font-family: monospace;">CB.SC.U4CSE23768</div>
+            <p class="team-bio" style="font-size: 0.82rem;">
+              16-model evaluation, Leave-One-Video-Out cross-validation benchmarking, and HistGradientBoosting deployment.
             </p>
             <div class="team-skills">
-              <span>Open Source</span>
-              <span>Capstones</span>
-              <span>AI for Sports</span>
+              <span>LOVO Benchmark</span>
+              <span>HistGradientBoosting</span>
+              <span>Deep Learning</span>
+            </div>
+          </div>
+
+          <!-- Member 5 -->
+          <div class="team-card">
+            <div class="team-avatar" style="background: rgba(6, 182, 212, 0.15); color: #06b6d4;">👨‍💻</div>
+            <h3 class="team-name" style="font-size: 1.05rem;">U. Yeshwanth Kumar Reddy</h3>
+            <div class="team-role" style="color: #06b6d4; font-weight: 600; font-family: monospace;">CB.SC.U4CS23453</div>
+            <p class="team-bio" style="font-size: 0.82rem;">
+              Full-stack platform, interactive 3D UI, multi-quality video annotation renderer, and cloud deployment.
+            </p>
+            <div class="team-skills">
+              <span>FastAPI</span>
+              <span>Interactive UI</span>
+              <span>Docker & Cloud</span>
             </div>
           </div>
         </div>

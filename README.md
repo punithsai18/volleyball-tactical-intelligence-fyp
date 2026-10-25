@@ -1,3 +1,14 @@
+---
+title: VolleyTactix AI - Automated Volleyball Tactical Intelligence
+emoji: 🏐
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 7860
+pinned: false
+license: mit
+---
+
 # Automated Volleyball Tactical Analysis from Broadcast Video
 
 Final Year Project — research-based. Converts raw broadcast match video into a

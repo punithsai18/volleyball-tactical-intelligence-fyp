@@ -1,0 +1,36 @@
+.git
+.github
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.tmp
+venv/
+env/
+.env
+
+# Exclude heavy deep learning models and raw video folders
+ALL_13_MODELS/DL_models/
+ml_models_all/
+NEW_OUTPUTS/
+OUTPUTS/
+DEMOO/
+BASEFRAMES/
+figures_atlas/
+results/
+tests/
+fyp/
+scratch/
+docs/
+
+# Ignore large videos, checkpoints, and archives
+*.mp4
+*.avi
+*.mkv
+*.pt
+*.pth
+*.tar.gz
+*.zip
+*.joblib
+!tactical_ml_v4.joblib
