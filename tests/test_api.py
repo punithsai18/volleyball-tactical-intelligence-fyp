@@ -71,7 +71,7 @@ def test_custom_formation_prediction():
         ]
     }
     response = client.post("/api/predict-custom-formation", json=payload)
-    assert response.status_code == 200
+    assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text}"
     res = response.json()
     assert "prediction" in res
     assert "label" in res["prediction"]

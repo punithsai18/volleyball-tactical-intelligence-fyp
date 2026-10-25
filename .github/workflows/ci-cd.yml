@@ -81,3 +81,31 @@ jobs:
           echo "=========================================================="
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+  deploy-render:
+    name: Deploy Backend to Render
+    needs: test-and-lint
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Render Deploy Hook
+        if: env.RENDER_DEPLOY_HOOK_URL != ''
+        run: |
+          echo "Triggering Render deployment..."
+          curl -s -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+          echo "Render deployment triggered successfully."
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+
+      - name: Render Deploy Info
+        if: env.RENDER_DEPLOY_HOOK_URL == ''
+        run: |
+          echo "=========================================================="
+          echo "Render backend deployment configured via render.yaml blueprint."
+          echo "Render automatically deploys on every git push if autoDeploy: true."
+          echo "Optional: Add RENDER_DEPLOY_HOOK_URL to GitHub Actions Secrets"
+          echo "to trigger manual deploy hooks from CI/CD."
+          echo "=========================================================="
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}

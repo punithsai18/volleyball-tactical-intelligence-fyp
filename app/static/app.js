@@ -2,6 +2,22 @@
  * VolleyTactix AI - Front-End Controller & Interactive Formation Canvas
  */
 
+// Render Backend Integration
+const RENDER_BACKEND_KEY = "VOLLEYTACTIX_RENDER_BACKEND";
+function getApiBaseUrl() {
+  const customUrl = localStorage.getItem(RENDER_BACKEND_KEY);
+  if (customUrl) return customUrl.replace(/\/$/, "");
+  if (window.RENDER_BACKEND_URL) return window.RENDER_BACKEND_URL.replace(/\/$/, "");
+  return "";
+}
+
+function apiUrl(endpoint) {
+  if (!endpoint) return "";
+  if (endpoint.startsWith("http://") || endpoint.startsWith("https://")) return endpoint;
+  const base = getApiBaseUrl();
+  return base ? `${base}${endpoint}` : endpoint;
+}
+
 // Application State
 const state = {
   currentModel: "hist_gradient_boosting",
@@ -239,13 +255,13 @@ function applyTheme(theme) {
 async function loadSamplesAndModels() {
   try {
     // 1. Fetch Models & Leaderboard
-    const modelsRes = await fetch("/api/models");
+    const modelsRes = await fetch(apiUrl("/api/models"));
     const modelsData = await modelsRes.json();
     state.models = modelsData.models;
     populateLeaderboard(modelsData.leaderboard);
 
     // 2. Fetch Samples
-    const samplesRes = await fetch("/api/samples");
+    const samplesRes = await fetch(apiUrl("/api/samples"));
     const samplesData = await samplesRes.json();
     state.samples = samplesData.samples;
     renderSampleChips(state.samples);
@@ -285,7 +301,7 @@ function renderSampleChips(samples) {
 async function loadSample(sampleId) {
   try {
     state.currentSampleId = sampleId;
-    const res = await fetch(`/api/sample/${sampleId}?model_key=${state.currentModel}`);
+    const res = await fetch(apiUrl(`/api/sample/${sampleId}?model_key=${state.currentModel}`));
     const data = await res.json();
     state.currentPrediction = data;
     state.currentFrameIdx = 0;
@@ -894,7 +910,7 @@ async function runConsensusInference() {
   if (!state.currentSampleId) return;
 
   try {
-    const res = await fetch("/api/predict-all", {
+    const res = await fetch(apiUrl("/api/predict-all"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ sample_id: state.currentSampleId })
@@ -998,7 +1014,7 @@ function renderConsensusView(data) {
 
 async function loadMatchTimeline() {
   try {
-    const res = await fetch("/api/match-timeline");
+    const res = await fetch(apiUrl("/api/match-timeline"));
     const data = await res.json();
     state.matchTimeline = data;
     renderMatchTimeline(data);
@@ -1376,7 +1392,7 @@ function handleSandboxPointerUp() {
 
 async function triggerSandboxPrediction() {
   try {
-    const res = await fetch("/api/predict-custom-formation", {
+    const res = await fetch(apiUrl("/api/predict-custom-formation"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -1638,7 +1654,7 @@ async function handleFileUpload(file) {
   formData.append("model_key", state.currentModel);
 
   try {
-    const res = await fetch("/api/upload-csv", {
+    const res = await fetch(apiUrl("/api/upload-csv"), {
       method: "POST",
       body: formData
     });
@@ -1730,7 +1746,7 @@ async function handleVideoUpload(file) {
   formData.append("max_duration_sec", maxDuration);
 
   try {
-    const res = await fetch("/api/upload-video", {
+    const res = await fetch(apiUrl("/api/upload-video"), {
       method: "POST",
       body: formData
     });
@@ -1769,7 +1785,7 @@ async function analyzeSampleVideo(sampleId) {
   formData.append("max_duration_sec", maxDuration);
 
   try {
-    const res = await fetch("/api/process-sample-video", {
+    const res = await fetch(apiUrl("/api/process-sample-video"), {
       method: "POST",
       body: formData
     });
@@ -1955,8 +1971,8 @@ async function runModelDuel() {
 
   try {
     const [resA, resB] = await Promise.all([
-      fetch(`/api/sample/${state.currentSampleId}?model_key=${modelAKey}`).then(r => r.json()),
-      fetch(`/api/sample/${state.currentSampleId}?model_key=${modelBKey}`).then(r => r.json())
+      fetch(apiUrl(`/api/sample/${state.currentSampleId}?model_key=${modelAKey}`)).then(r => r.json()),
+      fetch(apiUrl(`/api/sample/${state.currentSampleId}?model_key=${modelBKey}`)).then(r => r.json())
     ]);
 
     const predA = resA.prediction;
@@ -2417,7 +2433,42 @@ function setupProductShowcaseModal() {
       if (exportReportBtn) {
         exportReportBtn.click();
       } else {
-        window.location.href = "/api/download-suite";
+      window.location.href = apiUrl("/api/download-suite");
+    });
+  }
+
+  // Set modal download button URL dynamically
+  const modalDownloadMainBtn = document.getElementById("modalDownloadMainBtn");
+  if (modalDownloadMainBtn) {
+    modalDownloadMainBtn.href = apiUrl("/api/download-suite");
+  }
+
+  // System Status Badge: Click to configure Render Backend URL
+  const statusBadge = document.getElementById("systemStatusBadge");
+  if (statusBadge) {
+    const currentBackend = getApiBaseUrl();
+    const statusText = document.getElementById("systemStatusText");
+    if (statusText) {
+      if (currentBackend) {
+        statusText.innerText = "Render API Connected";
+      } else {
+        statusText.innerText = "Pipeline Online";
+      }
+    }
+    statusBadge.addEventListener("click", () => {
+      const current = localStorage.getItem(RENDER_BACKEND_KEY) || "";
+      const input = prompt(
+        "VolleyTactix AI Backend API URL:\n\nLeave empty to use current domain/localhost, or enter your Render backend URL (e.g., https://volleyball-tactical-intelligence-backend.onrender.com):",
+        current
+      );
+      if (input !== null) {
+        const val = input.trim();
+        if (val) {
+          localStorage.setItem(RENDER_BACKEND_KEY, val);
+        } else {
+          localStorage.removeItem(RENDER_BACKEND_KEY);
+        }
+        window.location.reload();
       }
     });
   }
