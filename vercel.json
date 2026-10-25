@@ -1,40 +1,33 @@
 {
-  "version": 2,
-  "name": "volleyball-tactical-intelligence",
-  "builds": [
+  "cleanUrls": true,
+  "rewrites": [
     {
-      "src": "api/index.py",
-      "use": "@vercel/python"
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
     },
     {
-      "src": "app/static/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "api/index.py"
+      "source": "/static/(.*)",
+      "destination": "/app/static/$1"
     },
     {
-      "src": "/static/(.*)",
-      "dest": "app/static/$1"
+      "source": "/style.css",
+      "destination": "/app/static/style.css"
     },
     {
-      "src": "/(index\\.html)?",
-      "dest": "app/static/index.html"
+      "source": "/app.js",
+      "destination": "/app/static/app.js"
     },
     {
-      "src": "/style\\.css",
-      "dest": "app/static/style.css"
+      "source": "/gallery/(.*)",
+      "destination": "/app/static/gallery/$1"
     },
     {
-      "src": "/app\\.js",
-      "dest": "app/static/app.js"
+      "source": "/",
+      "destination": "/app/static/index.html"
     },
     {
-      "src": "/(.*)",
-      "dest": "app/static/$1"
+      "source": "/(.*)",
+      "destination": "/app/static/$1"
     }
   ],
   "headers": [

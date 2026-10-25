@@ -146,6 +146,10 @@ def process_video_file(
     
     frame_idx = 0
     start_time = time.time()
+    frames_with_team_track = 0
+    total_near_players = 0
+    max_near_players = 0
+    frames_with_ball = 0
 
     print(f"[VideoService] Processing {max_frames_to_process} frames from {input_video_path}...")
 
@@ -194,6 +198,11 @@ def process_video_file(
                 if len(near_players) > 0:
                     prev_near_players = near_players
 
+            if len(near_players) >= 4:
+                frames_with_team_track += 1
+            total_near_players += len(near_players)
+            max_near_players = max(max_near_players, len(near_players))
+
             # 2. Run Ball Detection
             ball_pos: Optional[Tuple[float, float]] = None
             if ball_model is not None and frame_idx % 2 == 0:
@@ -207,6 +216,7 @@ def process_video_file(
                     pass
 
             if ball_pos is not None:
+                frames_with_ball += 1
                 ball_trail.append((int(ball_pos[0]), int(ball_pos[1])))
                 if len(ball_trail) > 14:
                     ball_trail.pop(0)
@@ -355,5 +365,12 @@ def process_video_file(
         "dominant_tactic": dominant_tactic,
         "dominant_color": HEX_TACTIC_COLORS.get(dominant_tactic, "#64748b"),
         "model_used": model_service.MODEL_REGISTRY.get(model_key, {}).get("name", model_key),
-        "windows": window_predictions
+        "windows": window_predictions,
+        "analysis_summary": {
+            "players_tracked": f"{min(max_near_players, 6)} / 6",
+            "tracking_coverage": f"{(frames_with_team_track / max(frame_idx, 1) * 100):.0f}%",
+            "team_movement": "Formation tracked" if frames_with_team_track else "Limited visibility",
+            "average_players": round(total_near_players / max(frame_idx, 1), 1),
+            "ball_coverage": f"{(frames_with_ball / max(frame_idx, 1) * 100):.0f}%"
+        }
     }

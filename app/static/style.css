@@ -2443,6 +2443,59 @@ html.lenis, html.lenis body {
   100% { box-shadow: 0 0 0 0 rgba(37,99,235,0); }
 }
 
+/* Focused upload-first workflow: the secondary research views remain available
+   to the existing code, but are intentionally out of the primary product path. */
+.nav-tabs .nav-tab:not(#navVideoBtn),
+#tab-radar, #tab-consensus, #tab-match, #tab-sandbox, #tab-leaderboard, #tab-upload {
+  display: none !important;
+}
+
+.features-grid .feature-card:not([data-jump="tab-video"]) {
+  display: none !important;
+}
+
+#tab-video.active {
+  display: block !important;
+}
+
+.analysis-overview {
+  margin-top: 1rem;
+  padding: 1.15rem;
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  background: linear-gradient(145deg, rgba(37, 99, 235, 0.08), var(--bg-tertiary));
+}
+
+.analysis-overview-heading, .analysis-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.analysis-overview h3 { margin-top: 0.28rem; font: 700 1.15rem 'Outfit', sans-serif; }
+.analysis-section-heading { margin: 1.25rem 0 0.75rem; align-items: center; }
+.analysis-section-heading h4 { margin-top: 0.22rem; font: 700 0.98rem 'Outfit', sans-serif; }
+.analysis-live-pill { color: var(--defense-color); font-size: 0.74rem; font-weight: 700; white-space: nowrap; }
+.analysis-live-pill .pulse-dot { display: inline-block; margin-right: 0.35rem; }
+.analysis-helper { color: var(--text-muted); font-size: 0.72rem; }
+.analysis-metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.65rem; margin-top: 1rem; }
+.analysis-metric { padding: 0.8rem; border-radius: 10px; background: var(--bg-secondary); border: 1px solid var(--border-subtle); }
+.analysis-metric span { display: block; color: var(--text-muted); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.analysis-metric strong { display: block; margin-top: 0.3rem; color: var(--text-primary); font: 700 1.08rem 'Outfit', sans-serif; }
+.class-clip-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.65rem; }
+.class-clip-card { display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; padding: 0.8rem; border: 1px solid var(--border-glass); border-radius: 10px; background: var(--bg-secondary); transition: var(--transition); }
+.class-clip-card:hover { transform: translateY(-2px); border-color: var(--accent-cyan); box-shadow: var(--shadow-glow); }
+.class-clip-name { font-weight: 700; font-size: 0.82rem; }
+.class-clip-meta { margin-top: 0.22rem; color: var(--text-muted); font-size: 0.7rem; }
+.class-clip-jump { flex-shrink: 0; padding: 0.42rem 0.65rem; border: 1px solid var(--border-strong); border-radius: 7px; background: transparent; color: var(--accent-blue); font-size: 0.7rem; font-weight: 700; cursor: pointer; }
+.class-clip-empty { color: var(--text-muted); font-size: 0.78rem; padding: 0.55rem 0; }
+
+@media (max-width: 780px) {
+  .analysis-metric-grid, .class-clip-grid { grid-template-columns: repeat(2, 1fr); }
+  .analysis-overview-heading, .analysis-section-heading { align-items: flex-start; flex-direction: column; gap: 0.3rem; }
+}
+
 /* ── Header download btn extra glow ring ── */
 .header-download-btn {
   animation: headerBtnGlow 3s ease-in-out infinite;

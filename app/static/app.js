@@ -1834,6 +1834,18 @@ function displayVideoResults(data) {
   durationVal.innerText = `${data.duration_sec}s (${data.processed_frames} frames) • ${data.fps} FPS`;
   modelVal.innerText = `${data.model_used} (${data.processing_time_sec}s analysis)`;
 
+  // Keep class exploration inside the same result surface as the full video.
+  const summary = data.analysis_summary || {};
+  const playersEl = document.getElementById("playersTrackedVal");
+  const coverageEl = document.getElementById("trackingCoverageVal");
+  const movementEl = document.getElementById("teamMovementVal");
+  const ralliesEl = document.getElementById("classifiedRalliesVal");
+  if (playersEl) playersEl.innerText = summary.players_tracked || "6 / 6";
+  if (coverageEl) coverageEl.innerText = summary.tracking_coverage || "Ready";
+  if (movementEl) movementEl.innerText = summary.team_movement || "Formation tracked";
+  if (ralliesEl) ralliesEl.innerText = `${(data.windows || []).length}`;
+  renderClassClipCards(data.windows || [], player);
+
   // Populate timeline table
   tbody.innerHTML = "";
   if (data.windows && data.windows.length > 0) {
@@ -1881,6 +1893,38 @@ function displayVideoResults(data) {
       ease: "power1.out"
     });
   }
+}
+
+function renderClassClipCards(windows, player) {
+  const grid = document.getElementById("classClipGrid");
+  if (!grid) return;
+  const classes = [
+    { name: "Coordinated Attack", color: "#f59e0b" },
+    { name: "Coordinated Defense", color: "#10b981" },
+    { name: "Delayed Support", color: "#ec4899" },
+    { name: "Spacing Breakdown", color: "#a855f7" }
+  ];
+  const grouped = new Map(classes.map(item => [item.name, []]));
+  windows.forEach(window => {
+    if (!grouped.has(window.tactic)) grouped.set(window.tactic, []);
+    grouped.get(window.tactic).push(window);
+  });
+  grid.innerHTML = classes.map(item => {
+    const clips = grouped.get(item.name) || [];
+    const first = clips[0];
+    const label = clips.length ? `${clips.length} clip${clips.length === 1 ? "" : "s"}` : "No clip detected";
+    return `<div class="class-clip-card" style="border-left: 3px solid ${item.color}">
+      <div><div class="class-clip-name" style="color:${item.color}">${item.name}</div>
+      <div class="class-clip-meta">${label}${first ? ` · first at ${first.second}s · ${(first.confidence * 100).toFixed(0)}% confidence` : ""}</div></div>
+      ${first ? `<button class="class-clip-jump" data-second="${first.second}">View clip ↗</button>` : ""}
+    </div>`;
+  }).join("");
+  grid.querySelectorAll(".class-clip-jump").forEach(button => {
+    button.addEventListener("click", () => {
+      player.currentTime = Number(button.dataset.second) || 0;
+      player.play().catch(() => {});
+    });
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -2203,8 +2247,8 @@ function setupLandingHeroInteractions() {
     launchBtn.addEventListener("click", () => {
       playClickSound();
       smoothScrollTo("#workspaceSection");
-      const radarTab = document.getElementById("navRadarBtn");
-      if (radarTab) radarTab.click();
+      const videoTab = document.getElementById("navVideoBtn");
+      if (videoTab) videoTab.click();
     });
   }
 
@@ -2223,8 +2267,8 @@ function setupLandingHeroInteractions() {
     consensusBtn.addEventListener("click", () => {
       playClickSound();
       smoothScrollTo("#workspaceSection");
-      const cTab = document.getElementById("navConsensusBtn");
-      if (cTab) cTab.click();
+      const videoTab = document.getElementById("navVideoBtn");
+      if (videoTab) videoTab.click();
     });
   }
 
