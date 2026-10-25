@@ -2108,18 +2108,18 @@ function initLenis() {
         touchMultiplier: 1.8
       });
 
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
-
       if (typeof ScrollTrigger !== "undefined" && typeof gsap !== "undefined") {
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => {
           lenis.raf(time * 1000);
         });
         gsap.ticker.lagSmoothing(0);
+      } else {
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
       }
     } catch (e) {
       console.warn("Lenis initialization skipped:", e);
@@ -2139,13 +2139,23 @@ function smoothScrollTo(targetSelector, offset = -70) {
 
 let vantaEffect = null;
 
-function initVanta() {
+function initVanta(retries = 10) {
   const el = document.getElementById("vantaBackground");
-  if (!el || typeof VANTA === "undefined" || typeof THREE === "undefined") return;
+  if (!el) return;
+
+  if (typeof VANTA === "undefined" || typeof THREE === "undefined") {
+    if (retries > 0) {
+      setTimeout(() => initVanta(retries - 1), 250);
+    }
+    return;
+  }
 
   const isDark = document.documentElement.getAttribute("data-theme") === "dark";
 
   try {
+    if (vantaEffect && vantaEffect.destroy) {
+      vantaEffect.destroy();
+    }
     vantaEffect = VANTA.NET({
       el: el,
       mouseControls: true,
@@ -2157,9 +2167,9 @@ function initVanta() {
       scaleMobile: 1.0,
       color: isDark ? 0x38bdf8 : 0x0284c7,
       backgroundColor: isDark ? 0x090d16 : 0xf8fafc,
-      points: 11.0,
-      maxDistance: 22.0,
-      spacing: 16.0,
+      points: 12.0,
+      maxDistance: 24.0,
+      spacing: 15.0,
       showDots: true
     });
   } catch (err) {
